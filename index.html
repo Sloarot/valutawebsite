@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Currency exchange from alternative providers</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@4.0.8/css/line.min.css">
+</head>
+
+<body>
+    <div class="outercontainer">
+        <div class="herocontainer">
+            <div id="logox"></div>
+            <div></div>
+        </div>
+        <div class="innercontainer">
+
+            <div class="currencyContainer">
+                <div class="quantityfield">
+                    <label for="quantity" class="sourceC">Amount:</label>
+                    <input type="text" name="quantity" id="quantity" autocomplete="Quantity" placeholder="amount">
+                </div>
+                <div id="notice" class="notice">Please enter an amount!</div>
+
+                <div class="wrapper">
+                    <div class="select-btn">
+                        <span>Base Currency</span>
+                        <i class="uil uil-angle-down"></i>
+                    </div>
+                    <div class="content">
+                        <div class="search">
+                            <i class="uil uil-search"></i>
+                            <input type="text" placeholder="Search">
+                        </div>
+                        <ul class="options">
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="wrapperTarget">
+                    <div class="select-btnTarget">
+                        <span>Target Currency</span>
+                        <i class="uil uil-angle-down"></i>
+                    </div>
+                    <div class="content">
+                        <div class="search">
+                            <i class="uil uil-search"></i>
+                            <input type="text" placeholder="Search">
+                        </div>
+                        <ul class="optionsTarget">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="noticeCurrency" class="notice">Currencies not correct, please check again!</div>
+
+            <div class="buttonContainer"> <input type="button" onclick="fetchWise()" class="button-9"
+                    value="Compare rates">
+            </div>
+
+            <div id="lastUpdated" class="last-updated"></div>
+
+            <table id="resultsTable">
+                <thead>
+
+                </thead>
+                <tbody id="searchResults">
+
+                </tbody>
+            </table>
+
+            <!-- How we rank explanation -->
+            <div class="ranking-explanation">
+                <h3>💡 How We Rank</h3>
+                <p>Results are sorted by <strong>"You Get"</strong> - the actual amount the recipient receives. The top
+                    result gives you the most money, even if fees or exchange rates seem different. The
+                    <strong>Effective Rate</strong> shows the true cost per unit after all fees.
+                </p>
+            </div>
+
+            <div class="logobanner">
+                <div class="logoprovider"><img src="img/wise_logo.png" alt=""></div>
+                <div class="logoprovider"><img src="img/paypal.jpg" alt=""></div>
+                <div class="logoprovider"><img src="img/revolut-logo.png" alt=""></div>
+                <div class="logoprovider"><img src="img/Paysera_logo.png" alt=""></div>
+                <div class="logoprovider"><img src="img/westerunion.png" alt=""></div>
+                <div class="logoprovider"><img src="img/Payoneer_logo.svg.png" alt=""></div>
+            </div>
+
+            <!-- Affiliate Disclosure -->
+            <div class="affiliate-disclosure">
+                <p><strong>📌 Affiliate Disclosure:</strong> We may earn a commission if you use our links to make a
+                    transfer. This helps us keep the service free. Our comparisons remain unbiased and we always show
+                    the best rates available.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Revolut Info Tooltip Modal -->
+    <div id="revolutTooltip" class="tooltip-modal">
+        <div class="tooltip-content">
+            <span class="tooltip-close" onclick="closeRevolutInfo()">&times;</span>
+            <h3>💡 Revolut has a special rate structure</h3>
+            <p><strong>The displayed rate is an ESTIMATE based on:</strong></p>
+            <ul>
+                <li>✓ Weekday rate within free tier limits</li>
+                <li>✓ Standard account pricing</li>
+                <li>✓ Real-time mid-market rate</li>
+            </ul>
+            <p><strong>Actual rates may vary based on:</strong></p>
+            <ul>
+                <li>📅 <strong>Day of week:</strong> 1% markup applies on weekends (Sat-Sun)</li>
+                <li>👤 <strong>Account tier:</strong> Standard/Premium/Metal get different rates</li>
+                <li>💰 <strong>Transfer limits:</strong> £1,000/month free for Standard accounts</li>
+                <li>⏰ <strong>Time of day:</strong> Rates update in real-time with market conditions</li>
+            </ul>
+            <p class="tooltip-note">For the exact rate, please visit Revolut's website directly.</p>
+        </div>
+    </div>
+
+    <!-- <span class="fi fi-be"></span> 
+    <span class="fi fi-gr"></span> -->
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
