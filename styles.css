@@ -146,11 +146,13 @@ li .selected {
 
 .outercontainer {
   background: rgb(71, 192, 182);
-  background: linear-gradient(
-    0deg,
-    rgba(71, 192, 182, 0.8) 0%,
-    rgba(54, 153, 217, 0.8) 100%
-  ), url("img/currencyexchange.png");
+  background:
+    linear-gradient(
+      0deg,
+      rgba(71, 192, 182, 0.8) 0%,
+      rgba(54, 153, 217, 0.8) 100%
+    ),
+    url("img/currencyexchange.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -206,19 +208,49 @@ li .selected {
 
 .quantityfield input {
   height: 65px;
-  font-size: 30px;
+  font-size: 1.5rem;
   padding: 0 22px;
-  border-radius: 7px;
-  background: white;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
   width: 40%;
   text-align: right;
-  color: #9d9d9d;
-  font-size: 1.5rem;
+  color: #2c3e50;
+  border: 2px solid #e0e6ed;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.05),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  outline: none;
+}
+
+.quantityfield input:hover {
+  border-color: #667eea;
+  box-shadow:
+    0 4px 12px rgba(102, 126, 234, 0.15),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.quantityfield input:focus {
+  border-color: #667eea;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(102, 126, 234, 0.1),
+    0 4px 16px rgba(102, 126, 234, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.quantityfield input::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
 }
 
 .quantityfield label {
   font-size: 22px;
   padding: 2px 22px;
+  color: #2c3e50;
+  font-weight: 500;
 }
 .notice {
   color: red;
@@ -441,7 +473,7 @@ li .selected {
 #resultsTable td:nth-child(4), /* Total Cost */
 #resultsTable td:nth-child(5) /* You Get */ {
   text-align: left;
-  padding-left: 6%; /* Adjust padding to your liking */
+  padding-left: 5%; /* Adjust padding to your liking */
 }
 
 /* #resultsTable tbody tr:nth-of-type(1) td:nth-child(5),
@@ -479,17 +511,6 @@ li .selected {
   100% {
     transform: scale(1);
   }
-}
-
-/* Last Updated Timestamp */
-.last-updated {
-  display: none;
-  text-align: center;
-  color: #666;
-  font-size: 0.9rem;
-  margin-top: 15px;
-  margin-bottom: 10px;
-  font-style: italic;
 }
 
 /* Ranking Explanation */
