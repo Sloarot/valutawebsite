@@ -1,3 +1,24 @@
+// Sliding Banner Animation
+document.addEventListener("DOMContentLoaded", function () {
+  const banner = document.querySelector(".sliding-banner");
+
+  if (banner) {
+    // Wait 1 second after page load
+    setTimeout(() => {
+      // Slide in (0.3 seconds)
+      banner.style.transition = "transform 0.3s ease-out";
+      banner.style.transform = "translateY(0)";
+
+      // Wait 2 seconds while visible
+      setTimeout(() => {
+        // Slide out (0.3 seconds)
+        banner.style.transition = "transform 0.3s ease-in";
+        banner.style.transform = "translateY(-100%)";
+      }, 4000);
+    }, 1000);
+  }
+});
+
 const wrapper = document.querySelector(".wrapper");
 selectBtn = wrapper.querySelector(".select-btn");
 searchInp = wrapper.querySelector("input");
@@ -654,6 +675,26 @@ async function fetchWise() {
   const rankingExplanation = document.querySelector(".ranking-explanation");
   if (rankingExplanation) {
     rankingExplanation.style.display = "block";
+  }
+
+  // Check if there are no results
+  if (filteredProviders.length === 0) {
+    const noResultsRow = document.createElement("tr");
+    const noResultsCell = document.createElement("td");
+    noResultsCell.setAttribute("colspan", "6");
+    noResultsCell.style.textAlign = "center";
+    noResultsCell.style.padding = "40px 20px";
+    noResultsCell.style.color = "#667eea";
+    noResultsCell.style.fontSize = "1.1em";
+    noResultsCell.innerHTML =
+      "😕 No results found for this currency pair. Please try different currencies.";
+    noResultsRow.appendChild(noResultsCell);
+    searchResults.appendChild(noResultsRow);
+
+    // Restore button state
+    button.disabled = false;
+    button.value = "Compare rates";
+    return;
   }
 
   // body part

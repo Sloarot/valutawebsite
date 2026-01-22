@@ -193,6 +193,81 @@ li .selected {
   position: absolute;
 }
 
+/* Sliding Banner */
+.sliding-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(71, 192, 182, 0.95) 0%,
+    rgba(54, 153, 217, 0.95) 100%
+  );
+  padding: 50px 20px;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-100%);
+}
+
+.banner-header {
+  text-align: center;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.banner-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  color: white;
+}
+
+.banner-icon {
+  font-size: 1.5rem;
+}
+
+.banner-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.banner-separator {
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 768px) {
+  .sliding-banner {
+    padding: 12px 15px;
+  }
+
+  .banner-header {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .banner-content {
+    gap: 10px;
+  }
+
+  .banner-icon {
+    font-size: 1.2rem;
+  }
+
+  .banner-text {
+    font-size: 0.85rem;
+  }
+
+  .banner-separator {
+    font-size: 1rem;
+  }
+}
+
 /*currencies section*/
 
 .currencyContainer {

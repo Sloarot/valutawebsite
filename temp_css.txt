@@ -1,0 +1,77 @@
+/* Instructions Banner */
+.instructions-banner {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #e0e6ed;
+}
+
+.instructions-banner h2 {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.instruction-steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.step-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.step-text {
+  color: #2c3e50;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .instructions-banner h2 {
+    font-size: 1.4rem;
+  }
+
+  .instruction-steps {
+    gap: 15px;
+  }
+
+  .step {
+    padding: 10px 15px;
+  }
+
+  .step-icon {
+    font-size: 1.5rem;
+  }
+
+  .step-text {
+    font-size: 0.9rem;
+  }
+}
+
+/*currencies section*/

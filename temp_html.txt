@@ -1,0 +1,23 @@
+        </div>
+        <div class="innercontainer">
+
+            <!-- Instructions Section -->
+            <div class="instructions-banner">
+                <h2>Compare Currency Exchange Rates</h2>
+                <div class="instruction-steps">
+                    <div class="step">
+                        <span class="step-icon">💵</span>
+                        <span class="step-text">Enter amount</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-icon">🔄</span>
+                        <span class="step-text">Select currencies</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-icon">✨</span>
+                        <span class="step-text">Compare best rates</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="currencyContainer">
