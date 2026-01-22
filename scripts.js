@@ -764,7 +764,7 @@ async function fetchWise() {
     amountCell.style.fontWeight = "bold";
 
     // Add styling for top 3 deals (border highlight only, no font size change)
-    if (rowIndex <= 3) {
+    if (rowIndex === 1) {
       dataRow.classList.add("best-deal-row");
     }
 
