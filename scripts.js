@@ -41,7 +41,7 @@ let currencies = [
   ["AUD - Australian Dollar", "au", "AUD"],
   ["AWG - Aruban Florin", "aw", "AWG"],
   ["AZN - Azerbaijani Manat", "az", "AZN"],
-  ["BAM - Bosnia-Herzegovina Convertible Mark", "ba", "BAM"],
+  ["BAM - Bosnia-Herz. Conv. Mark", "ba", "BAM"],
   ["BBD - Barbadian Dollar", "bb", "BBD"],
   ["BDT - Bangladeshi Taka", "bd", "BDT"],
   ["BGN - Bulgarian Lev", "bg", "BGN"],
@@ -451,10 +451,28 @@ const AFFILIATE_CONFIG = {
   // Add more as you get affiliate partnerships
 };
 
+// Build Wise affiliate link with deeplink for dynamic currency and amount
+function buildWiseAffiliateLink(sourceCurrency, targetCurrency, amount) {
+  // The actual Wise page you want to send users to
+  const wiseDestination = `https://wise.com/send?sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&sourceAmount=${amount}`;
+
+  // Your FULL Partnerize affiliate link
+  const affiliateBase = "https://wise.prf.hn/click/camref:1101l3RA2L";
+
+  // Encode the destination URL for the deeplink parameter
+  const encodedDestination = encodeURIComponent(wiseDestination);
+
+  // Add pubref to track that this came from your comparison tool
+  const pubref = `comparison-${sourceCurrency}-${targetCurrency}-${amount}`;
+
+  // Build complete affiliate link with pubref and deeplink
+  return `${affiliateBase}/pubref:${pubref}/destination:${encodedDestination}`;
+}
+
 // Get provider URL based on provider info with affiliate tracking
 function getProviderUrl(provider, sourceCurrency, targetCurrency, amount) {
   const baseUrls = {
-    39: `https://wise.com/send?sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&sourceAmount=${amount}`, // Wise
+    39: buildWiseAffiliateLink(sourceCurrency, targetCurrency, amount), // Wise dynamic affiliate link with tracking
     6: `https://www.paypal.com/myaccount/transfer/fx/calculator?from=${sourceCurrency}&to=${targetCurrency}&amount=${amount}`, // PayPal
     23: `https://www.moneygram.com/mgo/us/en/send?amount=${amount}&sourceCurrency=${sourceCurrency}&destinationCurrency=${targetCurrency}`, // MoneyGram
     44: `https://www.revolut.com/send-money/?from=${sourceCurrency}&to=${targetCurrency}&amount=${amount}`, // Revolut
@@ -589,6 +607,15 @@ async function fetchWise() {
       data = await response.json();
       timestamp = Date.now();
 
+      // Debug: Log full Wise provider data to see all available fields
+      const wiseProviderData = data.providers?.find((p) => p.id === 39);
+      if (wiseProviderData) {
+        console.log(
+          "🔍 Full Wise Provider Object:",
+          JSON.stringify(wiseProviderData, null, 2),
+        );
+      }
+
       // Cache the response
       setCachedData(sourceCurrency, targetCurrency, amount, data);
     } catch (error) {
@@ -602,7 +629,14 @@ async function fetchWise() {
   }
   // Process the data (whether cached or fresh)
   const providers = data.providers;
-  const filterbyID = [39, 6, 23, 22, 121, 127]; // Removed 44 (Revolut) - adding manually
+  const filterbyID = [
+    39, // Wise
+    6, // PayPal
+    23, // MoneyGram
+    22, // Western Union
+    121, // Paysera
+    127, // Payoneer
+  ]; // Note: 44 (Revolut) is added manually with estimated rates
   const filteredProviders = providers.filter((provider) =>
     filterbyID.includes(provider.id),
   );
@@ -770,21 +804,81 @@ async function fetchWise() {
 
     const linkCell = document.createElement("td");
 
-    // Replace "Go" button with badges for top 3 deals
+    // Replace "Go" button with badges for top 3 deals - but make them clickable links
     if (rowIndex === 1) {
-      const bestDealLink = document.createElement("span");
+      const bestDealLink = document.createElement("a");
+      bestDealLink.href = getProviderUrl(
+        provider,
+        sourceCurrency,
+        targetCurrency,
+        amount,
+      );
       bestDealLink.className = "best-deal-link";
       bestDealLink.innerHTML = "🏆 Best Deal";
+      bestDealLink.target = "_blank";
+      bestDealLink.rel = "noopener noreferrer";
+
+      // Add click tracking
+      bestDealLink.addEventListener("click", () => {
+        trackProviderClick(
+          provider.name,
+          provider.id,
+          sourceCurrency,
+          targetCurrency,
+          amount,
+        );
+      });
+
       linkCell.appendChild(bestDealLink);
     } else if (rowIndex === 2) {
-      const greatDealLink = document.createElement("span");
+      const greatDealLink = document.createElement("a");
+      greatDealLink.href = getProviderUrl(
+        provider,
+        sourceCurrency,
+        targetCurrency,
+        amount,
+      );
       greatDealLink.className = "great-deal-link";
       greatDealLink.innerHTML = "GREAT DEAL";
+      greatDealLink.target = "_blank";
+      greatDealLink.rel = "noopener noreferrer";
+
+      // Add click tracking
+      greatDealLink.addEventListener("click", () => {
+        trackProviderClick(
+          provider.name,
+          provider.id,
+          sourceCurrency,
+          targetCurrency,
+          amount,
+        );
+      });
+
       linkCell.appendChild(greatDealLink);
     } else if (rowIndex === 3) {
-      const goodDealLink = document.createElement("span");
+      const goodDealLink = document.createElement("a");
+      goodDealLink.href = getProviderUrl(
+        provider,
+        sourceCurrency,
+        targetCurrency,
+        amount,
+      );
       goodDealLink.className = "good-deal-link";
       goodDealLink.innerHTML = "GOOD DEAL";
+      goodDealLink.target = "_blank";
+      goodDealLink.rel = "noopener noreferrer";
+
+      // Add click tracking
+      goodDealLink.addEventListener("click", () => {
+        trackProviderClick(
+          provider.name,
+          provider.id,
+          sourceCurrency,
+          targetCurrency,
+          amount,
+        );
+      });
+
       linkCell.appendChild(goodDealLink);
     } else {
       const link = document.createElement("a");

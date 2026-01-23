@@ -507,16 +507,6 @@ li .selected {
   background-color: #fffef5;
 }
 
-.silver-deal-row {
-  border-left: 4px solid #c0c0c0;
-  background-color: #f8f8f8;
-}
-
-.bronze-deal-row {
-  border-left: 4px solid #cd7f32;
-  background-color: #fff8f0;
-}
-
 .amount-display {
   display: flex;
   flex-direction: column;
