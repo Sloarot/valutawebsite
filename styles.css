@@ -149,8 +149,8 @@ li .selected {
   background:
     linear-gradient(
       0deg,
-      rgba(71, 192, 182, 0.8) 0%,
-      rgba(54, 153, 217, 0.8) 100%
+      rgba(71, 192, 182, 0.5) 0%,
+      rgba(54, 153, 217, 0.5) 100%
     ),
     url("img/currencyexchange.png");
   background-size: cover;
@@ -625,13 +625,13 @@ li .selected {
 /* Loading Spinner */
 .spinner {
   margin: 0 auto;
-  width: 50px;
-  height: 50px;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #667eea;
-  border-right: 5px solid #764ba2;
-  border-bottom: 5px solid #f093fb;
-  border-left: 5px solid #4facfe;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #667eea;
+  border-right: 3px solid #764ba2;
+  border-bottom: 3px solid #f093fb;
+  border-left: 3px solid #4facfe;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -656,13 +656,18 @@ li .selected {
   font-size: 0.9rem;
   box-shadow: 0 2px 8px rgba(192, 192, 192, 0.4);
   border: 2px solid #a8a8a8;
-  transition: transform 0.2s;
+  transition:
+    transform 0.2s,
+    color 0.2s;
   animation: pulse 2s infinite;
-  cursor: default;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .great-deal-link:hover {
   transform: scale(1.1);
+  text-decoration: underline;
+  color: #0066cc;
 }
 
 .good-deal-link {
@@ -675,13 +680,18 @@ li .selected {
   font-size: 0.9rem;
   box-shadow: 0 2px 8px rgba(205, 127, 50, 0.4);
   border: 2px solid #b8722d;
-  transition: transform 0.2s;
+  transition:
+    transform 0.2s,
+    color 0.2s;
   animation: pulse 2s infinite;
-  cursor: default;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .good-deal-link:hover {
   transform: scale(1.1);
+  text-decoration: underline;
+  color: #ffeb3b;
 }
 
 /* Mobile Responsiveness */
