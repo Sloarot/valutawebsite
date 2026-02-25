@@ -10,6 +10,11 @@
 body {
   background: rgb(255, 251, 239);
 }
+.ditch-span {
+  color: rgb(223, 223, 19);
+
+  font-weight: 700;
+}
 
 .wrapper,
 .wrapperTarget {
@@ -162,14 +167,14 @@ li .selected {
 }
 .innercontainer {
   position: relative;
-  padding: 40px;
-  height: 30%;
-  min-height: 240px;
-  top: 20%;
+  padding: 2.1%;
+  height: 27%;
+  min-height: 24vh;
+  top: 20vh;
   max-width: 75%;
   display: block;
   margin: auto;
-  margin-top: 5%;
+  margin-top: 5vh;
   border-radius: 5px;
   z-index: 2;
   background-color: rgb(248, 248, 248);
@@ -241,40 +246,14 @@ li .selected {
   opacity: 0.7;
 }
 
-@media screen and (max-width: 768px) {
-  .sliding-banner {
-    padding: 12px 15px;
-  }
-
-  .banner-header {
-    font-size: 1rem;
-    margin-bottom: 8px;
-  }
-
-  .banner-content {
-    gap: 10px;
-  }
-
-  .banner-icon {
-    font-size: 1.2rem;
-  }
-
-  .banner-text {
-    font-size: 0.85rem;
-  }
-
-  .banner-separator {
-    font-size: 1rem;
-  }
-}
-
 /*currencies section*/
 
 .currencyContainer {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 5%;
+  margin-bottom: 5vh;
+  min-height: 50px;
   position: relative;
 }
 .quantityfield {
@@ -422,20 +401,18 @@ li .selected {
 
 #resultsTable {
   height: 30%;
-  min-height: 240px;
+  min-height: 24vh;
   margin: auto;
-  margin-top: 6%;
+  margin-top: 12vh;
+  width: 100%;
   border-collapse: collapse;
   border-radius: 10px;
-  overflow: hidden;
+  overflow-y: auto;
   /* background-color: rgb(248, 248, 248); */
-  box-shadow: rgba(35, 55, 80, 0.3) 0px 6px 12px;
 }
 
-#resultsTable th,
-#resultsTable td {
-  padding: 12px;
-  text-align: center;
+#resultsTable:has(tbody tr) {
+  box-shadow: rgba(35, 55, 80, 0.3) 0px 6px 12px;
 }
 
 #resultsTable th {
@@ -551,6 +528,12 @@ li .selected {
   padding-left: 5%; /* Adjust padding to your liking */
 }
 
+/* Add padding to action column for buttons */
+#resultsTable td:nth-child(6) {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 /* #resultsTable tbody tr:nth-of-type(1) td:nth-child(5),
 #resultsTable tbody tr:nth-of-type(2) td:nth-child(5),
 #resultsTable tbody tr:nth-of-type(3) td:nth-child(5) {
@@ -625,8 +608,8 @@ li .selected {
 /* Loading Spinner */
 .spinner {
   margin: 0 auto;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border: 3px solid #f3f3f3;
   border-top: 3px solid #667eea;
   border-right: 3px solid #764ba2;
@@ -694,155 +677,6 @@ li .selected {
   color: #ffeb3b;
 }
 
-/* Mobile Responsiveness */
-@media screen and (max-width: 1024px) {
-  .wrapper,
-  .wrapperTarget {
-    width: 45%;
-    margin-right: 2%;
-  }
-
-  .quantityfield {
-    width: 35%;
-  }
-
-  .innercontainer {
-    max-width: 90%;
-  }
-
-  .herocontainer {
-    max-width: 90%;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .currencyContainer {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .wrapper,
-  .wrapperTarget,
-  .quantityfield {
-    width: 100%;
-    margin-right: 0;
-    margin-bottom: 15px;
-  }
-
-  .quantityfield input {
-    width: 100%;
-  }
-
-  .button-9 {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .innercontainer {
-    max-width: 95%;
-    padding: 20px;
-  }
-
-  .herocontainer {
-    max-width: 95%;
-  }
-
-  #logox {
-    width: 250px;
-    height: 150px;
-    background-size: contain;
-  }
-
-  #resultsTable {
-    font-size: 0.85rem;
-    overflow-x: auto;
-    display: block;
-  }
-
-  #resultsTable th,
-  #resultsTable td {
-    font-size: 0.85rem;
-    overflow-x: auto;
-    display: block;
-  }
-
-  #resultsTable tbody {
-    display: block;
-    overflow-x: auto;
-  }
-
-  #resultsTable thead,
-  #resultsTable tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-  }
-
-  #resultsTable th,
-  #resultsTable td {
-    padding: 8px 4px;
-    min-width: 80px;
-  }
-
-  #resultsTable th:nth-child(1),
-  #resultsTable td:nth-child(1) {
-    min-width: 120px; /* Provider logos */
-  }
-
-  #resultsTable td img {
-    max-width: 100px;
-    padding: 8px;
-  }
-
-  .logobanner {
-    flex-direction: column;
-  }
-
-  .logoprovider {
-    margin: 10px 0;
-  }
-
-  .affiliate-disclosure {
-    max-width: 95%;
-    font-size: 0.85rem;
-    padding: 12px 18px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .select-btn,
-  .select-btnTarget {
-    height: 55px;
-    font-size: 18px;
-    padding: 0 15px;
-  }
-
-  .quantityfield input {
-    height: 55px;
-    font-size: 1.2rem;
-  }
-
-  .quantityfield label {
-    font-size: 18px;
-  }
-
-  .content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-height: 70vh;
-    z-index: 1000;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  }
-
-  #resultsTable th,
-  #resultsTable td {
-    font-size: 0.75rem;
-    padding: 6px 3px;
-  }
-}
 /* Revolut Tooltip Modal Styles */
 .tooltip-modal {
   display: none;
@@ -936,13 +770,18 @@ li .selected {
 }
 
 .info-icon {
-  color: #ffd700;
-  font-size: 1.2rem;
+  color: #555;
+  font-size: clamp(1rem, 2.3vw, 1.9rem);
   font-weight: bold;
-  margin-left: 5px;
   cursor: pointer;
   transition: transform 0.2s;
   display: inline-block;
+  position: absolute;
+  left: 89%;
+  /* margin-left: 5px; */
+  /* top: 8px; */
+  z-index: 1;
+  white-space: nowrap;
 }
 
 .info-icon:hover {
@@ -958,7 +797,371 @@ li .selected {
   font-weight: 500;
 }
 
+/* ============================================
+   MEDIA QUERIES - Mobile Responsiveness
+   Organized from large screens to small
+   ============================================ */
+
+/* Screens larger than 1300px */
+@media screen and (min-width: 1301px) {
+  .info-icon {
+    left: 80%;
+  }
+}
+
+/* Screens up to 1300px */
+@media screen and (max-width: 1300px) {
+  .quantityfield label {
+    font-size: 18px;
+  }
+
+  .select-btn,
+  .select-btnTarget {
+    font-size: 18px;
+  }
+
+  .options li,
+  .optionsTarget li {
+    font-size: 17px;
+  }
+
+  .quantityfield input,
+  .search input {
+    font-size: 1.3rem;
+  }
+
+  #resultsTable th,
+  #resultsTable td {
+    font-size: 0.9rem;
+  }
+
+  .great-deal-link,
+  .good-deal-link {
+    padding: 6px 8px;
+  }
+
+  .best-deal-link {
+    padding: 6px 7px;
+  }
+
+  /* Add padding to action column for buttons */
+  #resultsTable td:nth-child(6) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Screens up to 1100px */
+@media screen and (max-width: 1100px) {
+  .wrapper,
+  .wrapperTarget {
+    width: 45%;
+    margin-right: 2%;
+  }
+
+  .quantityfield {
+    width: 50%;
+  }
+
+  .innercontainer {
+    max-width: 90%;
+  }
+
+  .herocontainer {
+    max-width: 90%;
+  }
+
+  #resultsTable {
+    margin-top: 8vh;
+    width: 90%;
+  }
+
+  .great-deal-link,
+  .good-deal-link {
+    padding: 6px 8px;
+  }
+
+  .best-deal-link {
+    padding: 6px 7px;
+  }
+
+  #resultsTable td:nth-child(2), /* Exchange rate */
+  #resultsTable td:nth-child(3), /* Fees */
+  #resultsTable td:nth-child(4), /* Total Cost */
+  #resultsTable td:nth-child(5) /* You Get */ {
+    padding-left: 0;
+  }
+
+  #resultsTable th:nth-child(2),
+  #resultsTable th:nth-child(3),
+  #resultsTable th:nth-child(4),
+  #resultsTable th:nth-child(5) {
+    padding-left: 0;
+  }
+
+  /* Add padding to action column for buttons */
+  #resultsTable td:nth-child(6) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Screens between 788px and 987px */
+@media screen and (min-width: 788px) and (max-width: 987px) {
+  #resultsTable {
+    margin-left: -3vh;
+  }
+
+  /* Add padding to action column for buttons */
+  #resultsTable td:nth-child(6) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Screens up to 787px */
+@media screen and (max-width: 787px) {
+  .currencyContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wrapper,
+  .wrapperTarget,
+  .quantityfield {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .quantityfield input {
+    width: 100%;
+  }
+
+  .button-9 {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .innercontainer {
+    max-width: 95%;
+    padding: 20px;
+    height: 30%;
+  }
+
+  .herocontainer {
+    max-width: 95%;
+  }
+
+  #logox {
+    width: 250px;
+    height: 150px;
+    background-size: contain;
+  }
+
+  #resultsTable {
+    font-size: 0.85rem;
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+    margin-top: 6vh;
+  }
+
+  #resultsTable th,
+  #resultsTable td {
+    font-size: 0.85rem;
+    padding: 8px 4px;
+    min-width: 80px;
+  }
+
+  #resultsTable tbody {
+    display: block;
+    overflow-x: auto;
+  }
+
+  #resultsTable thead,
+  #resultsTable tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  #resultsTable th:nth-child(1),
+  #resultsTable td:nth-child(1) {
+    min-width: 120px; /* Provider logos */
+  }
+
+  #resultsTable td img {
+    max-width: 100px;
+    padding: 8px;
+  }
+
+  .logobanner {
+    flex-direction: column;
+  }
+
+  .logoprovider {
+    margin: 10px 0;
+  }
+
+  .affiliate-disclosure {
+    max-width: 95%;
+    font-size: 0.85rem;
+    padding: 12px 18px;
+  }
+}
+
+/* Screens up to 700px - Card-based mobile layout */
+@media screen and (max-width: 700px) {
+  /* Hide table headers on mobile */
+  #resultsTable thead {
+    display: none;
+  }
+
+  /* Make table body behave like a flex container */
+  #resultsTable,
+  #resultsTable tbody {
+    display: block;
+    width: 100%;
+  }
+
+  /* Convert each row into a card */
+  #resultsTable tbody tr {
+    display: block;
+    margin-bottom: 20px;
+    border: 2px solid #e0e6ed;
+    border-radius: 10px;
+    padding: 15px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Style each cell as a data row */
+  #resultsTable td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 8px;
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left !important;
+    min-width: 100% !important;
+  }
+
+  #resultsTable td:last-child {
+    border-bottom: none;
+  }
+
+  /* Add labels before each data cell */
+  #resultsTable td:nth-child(1)::before {
+    content: "Provider: ";
+  }
+  #resultsTable td:nth-child(2)::before {
+    content: "Exchange Rate: ";
+  }
+  #resultsTable td:nth-child(3)::before {
+    content: "Fees: ";
+  }
+  #resultsTable td:nth-child(4)::before {
+    content: "Total Cost: ";
+  }
+  #resultsTable td:nth-child(5)::before {
+    content: "You Get: ";
+  }
+
+  #resultsTable td::before {
+    font-weight: bold;
+    color: #2c3e50;
+    min-width: 120px;
+  }
+
+  /* Provider logo styling */
+  #resultsTable td:nth-child(1) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #resultsTable td img {
+    max-width: 150px;
+    padding: 10px 0;
+    margin: 0;
+  }
+
+  /* Original card override: inline styles on the span handle position,
+     so we just restore colour and size here */
+  .info-icon {
+    color: #555;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    display: inline-block;
+    /* Override base absolute positioning for card layout:
+       td is full-width here, so anchor to upper-right corner */
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    left: auto;
+    transform: none;
+  }
+
+  /* Highlight best deal cards */
+  .best-deal-row {
+    border: 3px solid #ffd700;
+    background: linear-gradient(135deg, #fffef5 0%, #fff9e6 100%);
+  }
+
+  /* Deal badges */
+  .best-deal-link,
+  .great-deal-link,
+  .good-deal-link {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    padding: 8px 14px;
+  }
+
+  /* Amount display in cards */
+  .amount-display {
+    align-items: flex-end;
+  }
+
+  .received-amount {
+    font-size: 1rem;
+  }
+
+  .effective-rate {
+    font-size: 0.75rem;
+  }
+}
+
+/* Screens up to 768px */
 @media screen and (max-width: 768px) {
+  .sliding-banner {
+    padding: 12px 15px;
+  }
+
+  .banner-header {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .banner-content {
+    gap: 10px;
+  }
+
+  .banner-icon {
+    font-size: 1.2rem;
+  }
+
+  .banner-text {
+    font-size: 0.85rem;
+  }
+
+  .banner-separator {
+    font-size: 1rem;
+  }
+
   .tooltip-content {
     width: 95%;
     margin: 10% auto;
@@ -972,5 +1175,76 @@ li .selected {
   .tooltip-content ul {
     margin-left: 15px;
     font-size: 0.9rem;
+  }
+
+  .innercontainer {
+    height: 43%;
+  }
+}
+
+/* Screens up to 480px */
+@media screen and (max-width: 480px) {
+  .select-btn,
+  .select-btnTarget {
+    height: 55px;
+    font-size: 18px;
+    padding: 0 15px;
+  }
+
+  .quantityfield input {
+    height: 55px;
+    font-size: 1.2rem;
+  }
+
+  .quantityfield label {
+    font-size: 18px;
+  }
+
+  .innercontainer {
+    height: 40%;
+  }
+
+  .content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-height: 70vh;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Extra small screens - card layout optimizations */
+  #resultsTable tbody tr {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+
+  #resultsTable td {
+    padding: 10px 5px;
+    font-size: 0.85rem;
+  }
+
+  #resultsTable td::before {
+    font-size: 0.85rem;
+    min-width: 100px;
+  }
+
+  #resultsTable td img {
+    max-width: 120px;
+  }
+
+  .best-deal-link,
+  .great-deal-link,
+  .good-deal-link {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  #resultsTable th,
+  #resultsTable td {
+    font-size: 0.75rem;
+    padding: 6px 3px;
   }
 }

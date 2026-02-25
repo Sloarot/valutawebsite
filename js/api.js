@@ -266,6 +266,11 @@ export async function fetchExchangeRates(
   return data;
 }
 
+// Local logo overrides – used when the API returns a broken/relative logo URL
+const LOCAL_LOGO_OVERRIDES = {
+  23: "img/moneygram_logo.png", // MoneyGram
+};
+
 // Display results in table
 export function displayResults(data, amount, timestamp) {
   const searchResults = document.getElementById("searchResults");
@@ -327,7 +332,7 @@ export function displayResults(data, amount, timestamp) {
 
   // header part
   const resultsTable = document.getElementById("resultsTable");
-  resultsTable.style.width = "100%";
+
   const thead = document.querySelector("#resultsTable thead");
   // Clear the current content in thead
   thead.innerHTML = "";
@@ -394,8 +399,16 @@ export function displayResults(data, amount, timestamp) {
     const logoCell = document.createElement("td");
     logoCell.style.position = "relative"; // For absolute positioning of info icon
     const logoImg = document.createElement("img");
-    logoImg.src = provider.logo;
+    logoImg.src = LOCAL_LOGO_OVERRIDES[provider.id] ?? provider.logo;
     logoImg.alt = escapeHtml(provider.name);
+    // Fallback: show provider name as text if the image fails to load
+    logoImg.onerror = function () {
+      this.style.display = "none";
+      const nameSpan = document.createElement("span");
+      nameSpan.textContent = provider.name;
+      nameSpan.style.fontWeight = "bold";
+      logoCell.appendChild(nameSpan);
+    };
     logoCell.appendChild(logoImg);
 
     // Add info icon for estimated rates (positioned at top of logo)
@@ -404,12 +417,6 @@ export function displayResults(data, amount, timestamp) {
       infoIconSpan.className = "info-icon";
       infoIconSpan.innerHTML = "ⓘ"; // Info icon in circle
       infoIconSpan.onclick = window.showRevolutInfo;
-      infoIconSpan.style.position = "absolute";
-      infoIconSpan.style.top = "35%";
-      infoIconSpan.style.transform = "translateY(-50%)";
-      infoIconSpan.style.left = "calc(75% + 2px)"; // Position right next to logo
-      infoIconSpan.style.fontSize = "2rem";
-      infoIconSpan.style.color = "#555"; // Dark grey color
       logoCell.appendChild(infoIconSpan);
     }
 
