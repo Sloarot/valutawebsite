@@ -15,9 +15,13 @@ import {
   closeRevolutInfo,
   setupModalClickHandler,
 } from "./js/utils.js";
+import { initI18n, setLanguage, t } from "./js/i18n.js";
 
 // Main initialization
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+  // Load translations first so the page renders in the right language
+  await initI18n();
+
   // Initialize sliding banner
   initializeSlidingBanner();
 
@@ -31,6 +35,24 @@ document.addEventListener("DOMContentLoaded", function () {
   // Make Revolut info functions available globally
   window.showRevolutInfo = showRevolutInfo;
   window.closeRevolutInfo = closeRevolutInfo;
+
+  // Expose language switcher globally for the lang-btn onclick handlers
+  window.switchLanguage = async (lang) => {
+    await setLanguage(lang);
+  };
+
+  // Toggle the language dropdown open/closed
+  window.toggleLangDropdown = () => {
+    document.getElementById("langDropdown").classList.toggle("open");
+  };
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    const dropdown = document.getElementById("langDropdown");
+    if (dropdown && !dropdown.contains(e.target)) {
+      dropdown.classList.remove("open");
+    }
+  });
 });
 
 // Main fetch function
@@ -45,7 +67,7 @@ async function fetchWise() {
   if (!quantity) {
     // Prevent form submission
     notice.style.display = "block";
-    // Show the notice
+    // Show the notice (text is already set via data-i18n in HTML)
     return;
   } else {
     notice.style.display = "none";
@@ -57,7 +79,7 @@ async function fetchWise() {
 
   // Validate amount is a positive number
   if (isNaN(amount) || amount <= 0) {
-    notice.textContent = "Please enter a valid positive number!";
+    notice.textContent = t("invalid_amount");
     notice.style.display = "block";
     return;
   }
@@ -71,12 +93,11 @@ async function fetchWise() {
 
   // Validation 2: Check if there's something wrong with currency input
   if (!sourceCurrency || !targetCurrency) {
-    noticeCurrency.textContent = "Please select both currencies!";
+    noticeCurrency.textContent = t("select_both_currencies");
     noticeCurrency.style.display = "block";
     return;
   } else if (sourceCurrency == targetCurrency) {
-    noticeCurrency.textContent =
-      "Source and target currencies cannot be the same!";
+    noticeCurrency.textContent = t("same_currency");
     noticeCurrency.style.display = "block";
     return;
   } else {
@@ -94,13 +115,12 @@ async function fetchWise() {
     data = cachedData.result;
     timestamp = cachedData.timestamp;
     button.disabled = true;
-    button.value = "Using cached data...";
+    button.value = t("using_cache");
   } else {
     // Show loading state
     button.disabled = true;
-    button.value = "Loading...";
-    searchResults.innerHTML =
-      '<tr><td colspan="6" style="text-align: center; padding: 20px;"><div class="spinner"></div><p style="margin-top: 15px; color: #667eea; font-weight: 500;">Fetching best rates...</p></td></tr>';
+    button.value = t("loading");
+    searchResults.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 20px;"><div class="spinner"></div><p style="margin-top: 15px; color: #667eea; font-weight: 500;">${t("fetching_rates")}</p></td></tr>`;
 
     try {
       data = await fetchExchangeRates(sourceCurrency, targetCurrency, amount);
@@ -110,10 +130,9 @@ async function fetchWise() {
       setCachedData(sourceCurrency, targetCurrency, amount, data);
     } catch (error) {
       console.error("Error:", error);
-      searchResults.innerHTML =
-        '<tr><td colspan="5" style="text-align: center; padding: 20px; color: red;">Error fetching rates. Please try again later.</td></tr>';
+      searchResults.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 20px; color: red;">${t("error_fetching")}</td></tr>`;
       button.disabled = false;
-      button.value = "Compare rates";
+      button.value = t("compare_btn");
       return;
     }
   }

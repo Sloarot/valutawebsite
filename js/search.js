@@ -1,4 +1,5 @@
 // Currency search and dropdown functionality
+import { t } from "./i18n.js";
 
 export const currencies = [
   ["EUR - Euro", "eu", "EUR"],
@@ -200,7 +201,7 @@ export function initializeSourceCurrencyDropdown() {
       )
       .join("");
 
-    options.innerHTML = arr ? arr : `<p>Oops, currency not found</p>`;
+    options.innerHTML = arr ? arr : `<p>${t("currency_not_found")}</p>`;
   });
 
   selectBtn.addEventListener("click", () => {
@@ -256,7 +257,7 @@ export function initializeTargetCurrencyDropdown() {
       )
       .join("");
 
-    optionsTarget.innerHTML = arr ? arr : `<p>Oops, currency not found</p>`;
+    optionsTarget.innerHTML = arr ? arr : `<p>${t("currency_not_found")}</p>`;
   });
 
   selectBtnTarget.addEventListener("click", () => {

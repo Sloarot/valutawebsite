@@ -1,5 +1,6 @@
 // API calls, caching, and provider data management
 import { escapeHtml } from "./utils.js";
+import { t } from "./i18n.js";
 
 // Cache management functions
 export function getCachedData(sourceCurrency, targetCurrency, amount) {
@@ -228,7 +229,7 @@ export function updateLastUpdatedDisplay(timestamp) {
       hour: "2-digit",
       minute: "2-digit",
     });
-    lastUpdated.textContent = `Last updated: ${timeStr}`;
+    lastUpdated.textContent = `${t("last_updated")} ${timeStr}`;
     lastUpdated.style.display = "block";
   }
 }
@@ -339,12 +340,12 @@ export function displayResults(data, amount, timestamp) {
   // Create the header row
   const headerRow = document.createElement("tr");
   const headers = [
-    "Provider",
-    "Exchange rate",
-    "Fees",
-    "Total Cost",
-    "You Get",
-    "Action",
+    t("th_provider"),
+    t("th_exchange_rate"),
+    t("th_fees"),
+    t("th_total_cost"),
+    t("th_you_get"),
+    t("th_action"),
   ];
   headers.forEach((text) => {
     const th = document.createElement("th");
@@ -369,8 +370,7 @@ export function displayResults(data, amount, timestamp) {
     noResultsCell.style.padding = "40px 20px";
     noResultsCell.style.color = "#667eea";
     noResultsCell.style.fontSize = "1.1em";
-    noResultsCell.innerHTML =
-      "😕 No results found for this currency pair. Please try different currencies.";
+    noResultsCell.textContent = t("no_results");
     noResultsRow.appendChild(noResultsCell);
     searchResults.appendChild(noResultsRow);
 
@@ -428,8 +428,7 @@ export function displayResults(data, amount, timestamp) {
 
     const feeCell = document.createElement("td");
     if (fee === 0) {
-      feeCell.innerHTML =
-        '<span style="color: green; font-weight: bold;">FREE</span>';
+      feeCell.innerHTML = `<span style="color: green; font-weight: bold;">${t("fee_free")}</span>`;
     } else {
       feeCell.textContent = `${fee.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${data.sourceCurrency}`;
     }
@@ -442,7 +441,7 @@ export function displayResults(data, amount, timestamp) {
     amountCell.innerHTML = `
       <div class="amount-display">
         <span class="received-amount">${receivedAmount.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${data.targetCurrency}</span>
-        <span class="effective-rate">Effective: ${effectiveRate.toLocaleString("de-DE", { minimumFractionDigits: 4, maximumFractionDigits: 6 })}</span>
+        <span class="effective-rate">${t("effective_rate")} ${effectiveRate.toLocaleString("de-DE", { minimumFractionDigits: 4, maximumFractionDigits: 6 })}</span>
       </div>
     `;
     amountCell.style.color = "#2a9d4e";
@@ -465,7 +464,7 @@ export function displayResults(data, amount, timestamp) {
         amount,
       );
       bestDealLink.className = "best-deal-link";
-      bestDealLink.innerHTML = "🏆 Best Deal";
+      bestDealLink.innerHTML = t("best_deal");
       bestDealLink.target = "_blank";
       bestDealLink.rel = "noopener noreferrer";
 
@@ -490,7 +489,7 @@ export function displayResults(data, amount, timestamp) {
         amount,
       );
       greatDealLink.className = "great-deal-link";
-      greatDealLink.innerHTML = "GREAT DEAL";
+      greatDealLink.innerHTML = t("great_deal");
       greatDealLink.target = "_blank";
       greatDealLink.rel = "noopener noreferrer";
 
@@ -515,7 +514,7 @@ export function displayResults(data, amount, timestamp) {
         amount,
       );
       goodDealLink.className = "good-deal-link";
-      goodDealLink.innerHTML = "GOOD DEAL";
+      goodDealLink.innerHTML = t("good_deal");
       goodDealLink.target = "_blank";
       goodDealLink.rel = "noopener noreferrer";
 
@@ -540,7 +539,7 @@ export function displayResults(data, amount, timestamp) {
         amount,
       );
       link.className = "glow-button";
-      link.textContent = "Go ➜";
+      link.textContent = t("go_btn");
       link.target = "_blank";
       link.rel = "noopener noreferrer";
 
@@ -571,7 +570,7 @@ export function displayResults(data, amount, timestamp) {
 
   // Restore button state
   button.disabled = false;
-  button.value = "Compare rates";
+  button.value = t("compare_btn");
 }
 
 // Optional: Function to view analytics (can be called from console or a button)
