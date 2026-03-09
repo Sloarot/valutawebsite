@@ -103,14 +103,7 @@ export function trackProviderClick(
   affiliateClicks++;
   localStorage.setItem("totalAffiliateClicks", affiliateClicks.toString());
 
-  // Log for analytics (could be sent to your analytics service)
-  console.log("🎯 Affiliate Click Tracked:", clickData);
-  console.log(
-    "📊 Total clicks for",
-    providerName + ":",
-    providerCounts[providerName],
-  );
-  console.log("💰 Total affiliate clicks:", affiliateClicks);
+  // Analytics data stored in localStorage for later reporting
 }
 
 // Function to calculate Revolut rates based on Wise mid-market rate
@@ -254,15 +247,6 @@ export async function fetchExchangeRates(
   );
 
   const data = await response.json();
-
-  // Debug: Log full Wise provider data to see all available fields
-  const wiseProviderData = data.providers?.find((p) => p.id === 39);
-  if (wiseProviderData) {
-    console.log(
-      "🔍 Full Wise Provider Object:",
-      JSON.stringify(wiseProviderData, null, 2),
-    );
-  }
 
   return data;
 }

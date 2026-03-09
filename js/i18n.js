@@ -2,6 +2,9 @@
 
 let translations = {};
 
+// Whitelist of supported language codes — add new codes here when adding locale files
+const SUPPORTED_LANGUAGES = ["en", "fr", "nl"];
+
 // Persist language selection across page loads
 export let currentLanguage = localStorage.getItem("ui-language") || "en";
 
@@ -129,5 +132,10 @@ export async function setLanguage(lang) {
  * Call and await this before wiring up the rest of the app.
  */
 export async function initI18n() {
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get("lang");
+  if (urlLang && SUPPORTED_LANGUAGES.includes(urlLang)) {
+    currentLanguage = urlLang;
+  }
   await setLanguage(currentLanguage);
 }

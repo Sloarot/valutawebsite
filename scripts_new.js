@@ -55,8 +55,17 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 });
 
+// Minimum milliseconds required between API requests
+const FETCH_COOLDOWN_MS = 3000;
+let lastFetchTime = 0;
+
 // Main fetch function
 async function fetchWise() {
+  // Rate limiting: ignore rapid repeated clicks
+  const now = Date.now();
+  if (now - lastFetchTime < FETCH_COOLDOWN_MS) return;
+  lastFetchTime = now;
+
   // Validation part: check if amount was entered
   const quantity = document.getElementById("quantity").value;
   const notice = document.getElementById("notice");
@@ -77,9 +86,15 @@ async function fetchWise() {
   let amountstring = document.getElementById("quantity").value;
   let amount = parseFloat(amountstring);
 
-  // Validate amount is a positive number
+  // Validate amount is a positive number and within a reasonable range
   if (isNaN(amount) || amount <= 0) {
     notice.textContent = t("invalid_amount");
+    notice.style.display = "block";
+    return;
+  }
+  if (amount > 1_000_000) {
+    notice.textContent =
+      t("amount_too_large") || "Amount exceeds maximum allowed (1,000,000).";
     notice.style.display = "block";
     return;
   }

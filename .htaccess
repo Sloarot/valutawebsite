@@ -1,0 +1,38 @@
+# -----------------------------------------------------------------------
+# Security Headers
+# -----------------------------------------------------------------------
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always set X-Frame-Options "DENY"
+
+    # Prevent MIME-type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Referrer policy – hides full URL from affiliate partners, keeps origin
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Content Security Policy
+    # - Scripts: only from this origin
+    # - Styles/Fonts: this origin + jsDelivr (flag-icons, unicons)
+    # - API calls: only to Wise comparisons endpoint
+    # - Images: this origin + data URIs
+    # - No framing allowed (reinforces X-Frame-Options)
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://api.transferwise.com; img-src 'self' data:; frame-ancestors 'none';"
+
+    # Block cross-site scripting in older browsers
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# -----------------------------------------------------------------------
+# Force HTTPS (enable once SSL certificate is in place)
+# -----------------------------------------------------------------------
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteCond %{HTTPS} off
+#     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
+
+# -----------------------------------------------------------------------
+# Hide server information
+# -----------------------------------------------------------------------
+ServerSignature Off
