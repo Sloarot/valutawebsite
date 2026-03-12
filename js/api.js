@@ -140,7 +140,6 @@ const AFFILIATE_CONFIG = {
   wise: "ref=yoursite123",
   paypal: "partner_id=YOUR_PAYPAL_ID",
   moneygram: "affiliate=YOUR_MG_ID",
-  revolut: "referral=YOUR_REVOLUT_CODE",
   westernunion: "affid=YOUR_WU_ID",
   xoom: "partner=YOUR_XOOM_ID",
   // Add more as you get affiliate partnerships
@@ -175,7 +174,7 @@ export function getProviderUrl(
     39: buildWiseAffiliateLink(sourceCurrency, targetCurrency, amount), // Wise dynamic affiliate link with tracking
     6: `https://www.paypal.com/myaccount/transfer/fx/calculator?from=${sourceCurrency}&to=${targetCurrency}&amount=${amount}`, // PayPal
     23: `https://www.moneygram.com/mgo/us/en/send?amount=${amount}&sourceCurrency=${sourceCurrency}&destinationCurrency=${targetCurrency}`, // MoneyGram
-    44: `https://www.revolut.com/send-money/?from=${sourceCurrency}&to=${targetCurrency}&amount=${amount}`, // Revolut
+    44: `https://www.revolut.com/currency-converter/`, // Revolut
     22: `https://www.westernunion.com/us/en/web/send-money?amount=${amount}`, // Western Union
     121: `https://www.paysera.com/v2/en/payment/currency-conversion`, // Paysera
     127: `https://www.payoneer.com/solutions/cross-border-payments/`, // Payoneer
@@ -187,6 +186,11 @@ export function getProviderUrl(
 
   // FOR WISE: Return the affiliate link directly without any modifications
   if (provider.id === 39) {
+    return url;
+  }
+
+  // FOR REVOLUT: Return the plain link without any extra parameters
+  if (provider.id === 44) {
     return url;
   }
 
