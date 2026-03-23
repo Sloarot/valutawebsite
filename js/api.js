@@ -49,12 +49,7 @@ export function clearOldCache() {
 }
 
 // Function to calculate Revolut rates based on Wise mid-market rate
-export function calculateRevolutRate(
-  sourceCurrency,
-  targetCurrency,
-  amount,
-  wiseMidMarketRate,
-) {
+export function calculateRevolutRate(amount, wiseMidMarketRate) {
   const now = new Date();
   const isWeekend = [0, 6].includes(now.getDay()); // 0 = Sunday, 6 = Saturday
 
@@ -202,12 +197,7 @@ export function displayResults(data, amount, timestamp) {
   const wiseProvider = providers.find((p) => p.id === 39);
   if (wiseProvider?.quotes?.[0]) {
     const wiseMidMarketRate = wiseProvider.quotes[0].rate;
-    const revolutRate = calculateRevolutRate(
-      data.sourceCurrency,
-      data.targetCurrency,
-      amount,
-      wiseMidMarketRate,
-    );
+    const revolutRate = calculateRevolutRate(amount, wiseMidMarketRate);
     const revolutProvider = {
       id: 44,
       name: "Revolut",
@@ -231,8 +221,6 @@ export function displayResults(data, amount, timestamp) {
   updateLastUpdatedDisplay(timestamp);
 
   // header part
-  const resultsTable = document.getElementById("resultsTable");
-
   const thead = document.querySelector("#resultsTable thead");
   // Clear the current content in thead
   thead.innerHTML = "";
@@ -357,60 +345,30 @@ export function displayResults(data, amount, timestamp) {
 
     const linkCell = document.createElement("td");
 
-    // Ranked badges for top 3 real API results only; estimated providers always get plain glow-button
-    if (rowIndex === 1 && !provider.isEstimated) {
-      const bestDealLink = document.createElement("a");
-      bestDealLink.href = getProviderUrl(
-        provider,
-        data.sourceCurrency,
-        data.targetCurrency,
-        amount,
-      );
-      bestDealLink.className = "best-deal-link";
-      bestDealLink.innerHTML = t("best_deal");
-      bestDealLink.target = "_blank";
-      bestDealLink.rel = "noopener noreferrer";
-      linkCell.appendChild(bestDealLink);
-    } else if (rowIndex === 2 && !provider.isEstimated) {
-      const greatDealLink = document.createElement("a");
-      greatDealLink.href = getProviderUrl(
-        provider,
-        data.sourceCurrency,
-        data.targetCurrency,
-        amount,
-      );
-      greatDealLink.className = "great-deal-link";
-      greatDealLink.innerHTML = t("great_deal");
-      greatDealLink.target = "_blank";
-      greatDealLink.rel = "noopener noreferrer";
-      linkCell.appendChild(greatDealLink);
-    } else if (rowIndex === 3 && !provider.isEstimated) {
-      const goodDealLink = document.createElement("a");
-      goodDealLink.href = getProviderUrl(
-        provider,
-        data.sourceCurrency,
-        data.targetCurrency,
-        amount,
-      );
-      goodDealLink.className = "good-deal-link";
-      goodDealLink.innerHTML = t("good_deal");
-      goodDealLink.target = "_blank";
-      goodDealLink.rel = "noopener noreferrer";
-      linkCell.appendChild(goodDealLink);
+    // Ranked badges for top 3 real API results; estimated providers always get plain glow-button
+    const badgeMap = {
+      1: ["best-deal-link", t("best_deal")],
+      2: ["great-deal-link", t("great_deal")],
+      3: ["good-deal-link", t("good_deal")],
+    };
+    const badge = !provider.isEstimated && badgeMap[rowIndex];
+    const link = document.createElement("a");
+    link.href = getProviderUrl(
+      provider,
+      data.sourceCurrency,
+      data.targetCurrency,
+      amount,
+    );
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    if (badge) {
+      link.className = badge[0];
+      link.innerHTML = badge[1];
     } else {
-      const link = document.createElement("a");
-      link.href = getProviderUrl(
-        provider,
-        data.sourceCurrency,
-        data.targetCurrency,
-        amount,
-      );
       link.className = "glow-button";
       link.textContent = t("go_btn");
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      linkCell.appendChild(link);
     }
+    linkCell.appendChild(link);
 
     dataRow.appendChild(logoCell);
     dataRow.appendChild(rateCell);
