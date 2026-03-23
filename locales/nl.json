@@ -57,5 +57,6 @@
   "select_both_currencies": "Selecteer beide valuta!",
   "same_currency": "Bronvaluta en doelvaluta mogen niet hetzelfde zijn!",
   "currency_not_found": "Oeps, valuta niet gevonden",
-  "last_updated": "Laatste update:"
+  "last_updated": "Laatste update:",
+  "estimated_disclaimer": "* Schatting – bezoek de aanbieder voor de exacte koers"
 }

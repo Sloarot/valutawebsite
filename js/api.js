@@ -48,64 +48,6 @@ export function clearOldCache() {
   });
 }
 
-// Click tracking for provider links with affiliate attribution
-export function trackProviderClick(
-  providerName,
-  providerId,
-  sourceCurrency,
-  targetCurrency,
-  amount,
-) {
-  const timestamp = new Date().toISOString();
-  const clickData = {
-    provider: providerName,
-    providerId: providerId,
-    currencies: `${sourceCurrency} → ${targetCurrency}`,
-    amount: amount,
-    timestamp: timestamp,
-    affiliateTracking: true,
-    url: getProviderUrl(
-      { id: providerId, name: providerName },
-      sourceCurrency,
-      targetCurrency,
-      amount,
-    ),
-  };
-
-  // Store last clicked provider
-  localStorage.setItem("lastClickedProvider", providerName);
-  localStorage.setItem("lastClickTime", timestamp);
-
-  // Get click history
-  let clickHistory = JSON.parse(
-    localStorage.getItem("providerClickHistory") || "[]",
-  );
-  clickHistory.push(clickData);
-
-  // Keep only last 50 clicks to avoid storage issues
-  if (clickHistory.length > 50) {
-    clickHistory = clickHistory.slice(-50);
-  }
-
-  localStorage.setItem("providerClickHistory", JSON.stringify(clickHistory));
-
-  // Count clicks per provider
-  let providerCounts = JSON.parse(
-    localStorage.getItem("providerClickCounts") || "{}",
-  );
-  providerCounts[providerName] = (providerCounts[providerName] || 0) + 1;
-  localStorage.setItem("providerClickCounts", JSON.stringify(providerCounts));
-
-  // Calculate potential affiliate revenue tracking (for analytics)
-  let affiliateClicks = parseInt(
-    localStorage.getItem("totalAffiliateClicks") || "0",
-  );
-  affiliateClicks++;
-  localStorage.setItem("totalAffiliateClicks", affiliateClicks.toString());
-
-  // Analytics data stored in localStorage for later reporting
-}
-
 // Function to calculate Revolut rates based on Wise mid-market rate
 export function calculateRevolutRate(
   sourceCurrency,
@@ -135,16 +77,6 @@ export function calculateRevolutRate(
   };
 }
 
-// Affiliate Configuration - Update these with your actual affiliate IDs
-const AFFILIATE_CONFIG = {
-  wise: "ref=yoursite123",
-  paypal: "partner_id=YOUR_PAYPAL_ID",
-  moneygram: "affiliate=YOUR_MG_ID",
-  westernunion: "affid=YOUR_WU_ID",
-  xoom: "partner=YOUR_XOOM_ID",
-  // Add more as you get affiliate partnerships
-};
-
 // Build Wise affiliate link with deeplink for dynamic currency and amount
 function buildWiseAffiliateLink(sourceCurrency, targetCurrency, amount) {
   // The actual Wise page you want to send users to
@@ -163,59 +95,34 @@ function buildWiseAffiliateLink(sourceCurrency, targetCurrency, amount) {
   return `${affiliateBase}/pubref:${pubref}/destination:${encodedDestination}`;
 }
 
-// Get provider URL based on provider info with affiliate tracking
+// Get provider URL – uses hardcoded deep-links where available,
+// then falls back to the API-supplied website URL for any provider not listed.
 export function getProviderUrl(
   provider,
   sourceCurrency,
   targetCurrency,
   amount,
 ) {
-  const baseUrls = {
-    39: buildWiseAffiliateLink(sourceCurrency, targetCurrency, amount), // Wise dynamic affiliate link with tracking
-    6: `https://www.paypal.com/myaccount/transfer/fx/calculator?from=${sourceCurrency}&to=${targetCurrency}&amount=${amount}`, // PayPal
-    23: `https://www.moneygram.com/mgo/us/en/send?amount=${amount}&sourceCurrency=${sourceCurrency}&destinationCurrency=${targetCurrency}`, // MoneyGram
-    44: `https://www.revolut.com/currency-converter/`, // Revolut
-    22: `https://www.westernunion.com/us/en/web/send-money?amount=${amount}`, // Western Union
-    121: `https://www.paysera.com/v2/en/payment/currency-conversion`, // Paysera
-    127: `https://www.payoneer.com/solutions/cross-border-payments/`, // Payoneer
-    41: `https://www.xoom.com/send-money?amount=${amount}`, // Xoom
-    104: `https://www.remitly.com/us/en`, // Remitly
-  };
-
-  let url = baseUrls[provider.id] || provider.website || "#";
-
-  // FOR WISE: Return the affiliate link directly without any modifications
+  // Wise uses a custom Partnerize affiliate deep-link with pubref tracking
   if (provider.id === 39) {
-    return url;
+    return buildWiseAffiliateLink(sourceCurrency, targetCurrency, amount);
   }
 
-  // FOR REVOLUT: Return the plain link without any extra parameters
-  if (provider.id === 44) {
-    return url;
-  }
-
-  // For OTHER providers: Add affiliate parameters
-  const affiliateMap = {
-    6: AFFILIATE_CONFIG.paypal,
-    23: AFFILIATE_CONFIG.moneygram,
-    44: AFFILIATE_CONFIG.revolut,
-    22: AFFILIATE_CONFIG.westernunion,
-    41: AFFILIATE_CONFIG.xoom,
+  // Deep-link overrides for known providers.
+  // Any provider not listed here will use provider.website from the API response.
+  const deepLinks = {
+    6: "https://www.paypal.com/",
+    22: `https://www.westernunion.com/us/en/web/send-money?amount=${amount}`,
+    23: `https://www.moneygram.com/mgo/us/en/send?amount=${amount}&sourceCurrency=${sourceCurrency}&destinationCurrency=${targetCurrency}`,
+    41: `https://www.xoom.com/send-money?amount=${amount}`,
+    44: "https://www.revolut.com/",
+    104: "https://www.remitly.com/gb/en/",
+    121: "https://www.paysera.com/v2/en/payment/currency-conversion",
+    // 127 = Skrill (confirmed by API response; Payoneer falls back to provider.website)
+    127: "https://www.skrill.com/en/",
   };
 
-  if (affiliateMap[provider.id] && url !== "#") {
-    const separator = url.includes("?") ? "&" : "?";
-    url += separator + affiliateMap[provider.id];
-  }
-
-  // Add UTM parameters for tracking (only for non-Wise providers)
-  const utmParams = `utm_source=currencycomparison&utm_medium=affiliate&utm_campaign=comparison_tool`;
-  const separator = url.includes("?") ? "&" : "?";
-  if (url !== "#") {
-    url += separator + utmParams;
-  }
-
-  return url;
+  return deepLinks[provider.id] ?? provider.website ?? "#";
 }
 
 export function updateLastUpdatedDisplay(timestamp) {
@@ -269,18 +176,31 @@ export function displayResults(data, amount, timestamp) {
   const filterbyID = [
     39, // Wise
     6, // PayPal
-    23, // MoneyGram
     22, // Western Union
+    23, // MoneyGram
+    41, // Xoom
+    104, // Remitly
     121, // Paysera
     127, // Payoneer
-  ]; // Note: 44 (Revolut) is added manually with estimated rates
+    // Verify IDs below against a live API response:
+    // console.log(data.providers.map(p => ({ id: p.id, name: p.name })))
+    161, // WorldRemit  (verify ID)
+    140, // OFX         (verify ID)
+    45, // Skrill      (verify ID)
+    253, // Airwallex   (verify ID)
+  ]; // Revolut (44) is appended last with an estimated rate
   const filteredProviders = providers.filter((provider) =>
     filterbyID.includes(provider.id),
   );
 
-  // Get Wise mid-market rate to calculate Revolut's rate
+  // Sort real API providers by best received amount first
+  filteredProviders.sort(
+    (a, b) => b.quotes[0].receivedAmount - a.quotes[0].receivedAmount,
+  );
+
+  // Append Revolut last – its rate is estimated, not sourced from the API
   const wiseProvider = providers.find((p) => p.id === 39);
-  if (wiseProvider && wiseProvider.quotes && wiseProvider.quotes[0]) {
+  if (wiseProvider?.quotes?.[0]) {
     const wiseMidMarketRate = wiseProvider.quotes[0].rate;
     const revolutRate = calculateRevolutRate(
       data.sourceCurrency,
@@ -288,8 +208,6 @@ export function displayResults(data, amount, timestamp) {
       amount,
       wiseMidMarketRate,
     );
-
-    // Create manual Revolut provider object
     const revolutProvider = {
       id: 44,
       name: "Revolut",
@@ -302,18 +220,11 @@ export function displayResults(data, amount, timestamp) {
           receivedAmount: revolutRate.receivedAmount,
         },
       ],
-      isEstimated: true, // Flag to show asterisk
+      isEstimated: true,
       isWeekend: revolutRate.isWeekend,
     };
-
-    // Add Revolut to the filtered providers
     filteredProviders.push(revolutProvider);
   }
-
-  // Sort all providers (including Revolut) by best rate
-  filteredProviders.sort(
-    (a, b) => b.quotes[0].receivedAmount - a.quotes[0].receivedAmount,
-  );
   searchResults.innerHTML = "";
 
   // Update last updated timestamp
@@ -374,6 +285,7 @@ export function displayResults(data, amount, timestamp) {
     rowIndex++;
     // Create table row with data
     const dataRow = document.createElement("tr");
+    if (provider.isEstimated) dataRow.classList.add("estimated-row");
 
     // Calculate total cost
     const fee = provider.quotes[0].fee;
@@ -409,10 +321,11 @@ export function displayResults(data, amount, timestamp) {
     }
 
     const rateCell = document.createElement("td");
-    rateCell.textContent = provider.quotes[0].rate.toLocaleString("de-DE", {
+    const rateStr = provider.quotes[0].rate.toLocaleString("de-DE", {
       minimumFractionDigits: 4,
       maximumFractionDigits: 6,
     });
+    rateCell.textContent = provider.isEstimated ? `~${rateStr}` : rateStr;
 
     const feeCell = document.createElement("td");
     if (fee === 0) {
@@ -426,24 +339,26 @@ export function displayResults(data, amount, timestamp) {
     totalCostCell.style.fontWeight = "bold";
 
     const amountCell = document.createElement("td");
+    const amtPrefix = provider.isEstimated ? "~" : "";
     amountCell.innerHTML = `
       <div class="amount-display">
-        <span class="received-amount">${receivedAmount.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${data.targetCurrency}</span>
-        <span class="effective-rate">${t("effective_rate")} ${effectiveRate.toLocaleString("de-DE", { minimumFractionDigits: 4, maximumFractionDigits: 6 })}</span>
+        <span class="received-amount">${amtPrefix}${receivedAmount.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${data.targetCurrency}</span>
+        <span class="effective-rate">${t("effective_rate")} ${amtPrefix}${effectiveRate.toLocaleString("de-DE", { minimumFractionDigits: 4, maximumFractionDigits: 6 })}</span>
+        ${provider.isEstimated ? `<span class="estimated-notice">${t("estimated_disclaimer")}</span>` : ""}
       </div>
     `;
     amountCell.style.color = "#2a9d4e";
     amountCell.style.fontWeight = "bold";
 
     // Add styling for top 3 deals (border highlight only, no font size change)
-    if (rowIndex === 1) {
+    if (rowIndex === 1 && !provider.isEstimated) {
       dataRow.classList.add("best-deal-row");
     }
 
     const linkCell = document.createElement("td");
 
-    // Replace "Go" button with badges for top 3 deals - but make them clickable links
-    if (rowIndex === 1) {
+    // Ranked badges for top 3 real API results only; estimated providers always get plain glow-button
+    if (rowIndex === 1 && !provider.isEstimated) {
       const bestDealLink = document.createElement("a");
       bestDealLink.href = getProviderUrl(
         provider,
@@ -455,20 +370,8 @@ export function displayResults(data, amount, timestamp) {
       bestDealLink.innerHTML = t("best_deal");
       bestDealLink.target = "_blank";
       bestDealLink.rel = "noopener noreferrer";
-
-      // Add click tracking
-      bestDealLink.addEventListener("click", () => {
-        trackProviderClick(
-          provider.name,
-          provider.id,
-          data.sourceCurrency,
-          data.targetCurrency,
-          amount,
-        );
-      });
-
       linkCell.appendChild(bestDealLink);
-    } else if (rowIndex === 2) {
+    } else if (rowIndex === 2 && !provider.isEstimated) {
       const greatDealLink = document.createElement("a");
       greatDealLink.href = getProviderUrl(
         provider,
@@ -480,20 +383,8 @@ export function displayResults(data, amount, timestamp) {
       greatDealLink.innerHTML = t("great_deal");
       greatDealLink.target = "_blank";
       greatDealLink.rel = "noopener noreferrer";
-
-      // Add click tracking
-      greatDealLink.addEventListener("click", () => {
-        trackProviderClick(
-          provider.name,
-          provider.id,
-          data.sourceCurrency,
-          data.targetCurrency,
-          amount,
-        );
-      });
-
       linkCell.appendChild(greatDealLink);
-    } else if (rowIndex === 3) {
+    } else if (rowIndex === 3 && !provider.isEstimated) {
       const goodDealLink = document.createElement("a");
       goodDealLink.href = getProviderUrl(
         provider,
@@ -505,18 +396,6 @@ export function displayResults(data, amount, timestamp) {
       goodDealLink.innerHTML = t("good_deal");
       goodDealLink.target = "_blank";
       goodDealLink.rel = "noopener noreferrer";
-
-      // Add click tracking
-      goodDealLink.addEventListener("click", () => {
-        trackProviderClick(
-          provider.name,
-          provider.id,
-          data.sourceCurrency,
-          data.targetCurrency,
-          amount,
-        );
-      });
-
       linkCell.appendChild(goodDealLink);
     } else {
       const link = document.createElement("a");
@@ -530,18 +409,6 @@ export function displayResults(data, amount, timestamp) {
       link.textContent = t("go_btn");
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-
-      // Add click tracking
-      link.addEventListener("click", () => {
-        trackProviderClick(
-          provider.name,
-          provider.id,
-          data.sourceCurrency,
-          data.targetCurrency,
-          amount,
-        );
-      });
-
       linkCell.appendChild(link);
     }
 
@@ -559,34 +426,4 @@ export function displayResults(data, amount, timestamp) {
   // Restore button state
   button.disabled = false;
   button.value = t("compare_btn");
-}
-
-// Optional: Function to view analytics (can be called from console or a button)
-export function viewClickAnalytics() {
-  const history = JSON.parse(
-    localStorage.getItem("providerClickHistory") || "[]",
-  );
-  const counts = JSON.parse(
-    localStorage.getItem("providerClickCounts") || "{}",
-  );
-  const lastClicked = localStorage.getItem("lastClickedProvider");
-  const lastTime = localStorage.getItem("lastClickTime");
-  const totalAffiliateClicks = parseInt(
-    localStorage.getItem("totalAffiliateClicks") || "0",
-  );
-
-  console.log("💰 AFFILIATE CLICK ANALYTICS");
-  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-  console.log("🎯 Total Affiliate Clicks:", totalAffiliateClicks);
-  console.log("📈 Click Counts by Provider:");
-  console.table(counts);
-  console.log("\n🕐 Last Clicked:", lastClicked, "at", lastTime);
-  console.log("\n📝 Recent Click History (last 10):");
-  console.table(history.slice(-10));
-  console.log(
-    "\n💡 Note: All clicks include UTM tracking and affiliate parameters",
-  );
-  console.log("💡 To clear analytics: localStorage.clear()");
-
-  return { counts, history, lastClicked, lastTime, totalAffiliateClicks };
 }
