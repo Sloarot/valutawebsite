@@ -119,9 +119,14 @@ body {
 }
 
 .ditch-span {
-  color: rgb(223, 223, 19);
-
-  font-weight: 700;
+  color: #ffe600;
+  font-weight: 900;
+  font-size: 1.6em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-shadow:
+    0 0 12px rgba(255, 230, 0, 0.7),
+    0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .wrapper,
@@ -301,8 +306,9 @@ li .selected {
   margin: 2% 2%;
   width: 350px;
   height: 200px;
-  background-image: url("img/logo_white.png");
+  background-image: url("img/FX_CHECKER.png");
   background-repeat: no-repeat;
+  background-size: contain;
   position: absolute;
 }
 
