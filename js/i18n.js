@@ -3,7 +3,21 @@
 let translations = {};
 
 // Whitelist of supported language codes — add new codes here when adding locale files
-const SUPPORTED_LANGUAGES = ["en", "fr", "nl"];
+const SUPPORTED_LANGUAGES = [
+  "en",
+  "fr",
+  "nl",
+  "pl",
+  "bg",
+  "ro",
+  "es",
+  "pt",
+  "it",
+  "cs",
+  "ru",
+  "hu",
+  "el",
+];
 
 // Persist language selection across page loads
 export let currentLanguage = localStorage.getItem("ui-language") || "en";
@@ -99,8 +113,36 @@ function applyTranslations() {
   }
 
   // Update the dropdown trigger: flag + label + close the menu
-  const flagMap = { en: "gb", fr: "fr", nl: "nl" };
-  const labelMap = { en: "EN", fr: "FR", nl: "NL" };
+  const flagMap = {
+    en: "gb",
+    fr: "fr",
+    nl: "nl",
+    pl: "pl",
+    bg: "bg",
+    ro: "ro",
+    es: "es",
+    pt: "pt",
+    it: "it",
+    cs: "cz",
+    ru: "ru",
+    hu: "hu",
+    el: "gr",
+  };
+  const labelMap = {
+    en: "EN",
+    fr: "FR",
+    nl: "NL",
+    pl: "PL",
+    bg: "BG",
+    ro: "RO",
+    es: "ES",
+    pt: "PT",
+    it: "IT",
+    cs: "CS",
+    ru: "RU",
+    hu: "HU",
+    el: "EL",
+  };
   const langFlag = document.getElementById("langFlag");
   const langLabel = document.getElementById("langLabel");
   const langDropdown = document.getElementById("langDropdown");
