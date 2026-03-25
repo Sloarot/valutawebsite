@@ -1,5 +1,9 @@
 # Dependencies
 node_modules/
+package-lock.json
+
+# Backup / unused assets (not needed on server)
+unused/
 
 # IDE
 .vscode/
@@ -15,3 +19,7 @@ Thumbs.db
 # Environment variables
 .env
 .env.local
+
+# Affinity Designer source files
+*.afdesign
+*.afdesign~lock~
