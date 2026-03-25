@@ -177,8 +177,6 @@ export function displayResults(data, amount, timestamp) {
     104, // Remitly
     121, // Paysera
     127, // Payoneer
-    // Verify IDs below against a live API response:
-    // console.log(data.providers.map(p => ({ id: p.id, name: p.name })))
     161, // WorldRemit  (verify ID)
     140, // OFX         (verify ID)
     45, // Skrill      (verify ID)

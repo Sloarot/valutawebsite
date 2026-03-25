@@ -7,11 +7,6 @@ export function escapeHtml(unsafe) {
   return div.innerHTML;
 }
 
-// European number format
-export function EuropeanFormat(number) {
-  return number.toLocaleString("de-DE");
-}
-
 // Initialize sliding banner animation
 export function initializeSlidingBanner() {
   const banner = document.querySelector(".sliding-banner");
