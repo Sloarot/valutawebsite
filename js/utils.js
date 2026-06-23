@@ -48,10 +48,10 @@ export function closeRevolutInfo() {
 
 // Close modal when clicking outside of it
 export function setupModalClickHandler() {
-  window.onclick = function (event) {
+  window.addEventListener("click", (event) => {
     const modal = document.getElementById("revolutTooltip");
     if (event.target === modal) {
       modal.style.display = "none";
     }
-  };
+  });
 }

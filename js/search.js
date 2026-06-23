@@ -168,24 +168,26 @@ export function initializeSourceCurrencyDropdown() {
 
     currencies.forEach((country) => {
       let isSelected = country == selectedCountry ? "selected" : "";
-      let li = `<li onclick="window.updateSourceName(this)" isocode=${country[2]} class="${isSelected}">${country[0]}<span class="fi fi-${country[1]}"></span></li>`;
+      let li = `<li isocode="${country[2]}" class="${isSelected}">${country[0]}<span class="fi fi-${country[1]}"></span></li>`;
       options.insertAdjacentHTML("beforeend", li);
     });
   }
 
   function updateName(selectedLi) {
     searchInp.value = "";
-    let Isocode = selectedLi.attributes.isocode.value;
+    let Isocode = selectedLi.getAttribute("isocode");
 
     addCountry(selectedLi.innerText);
     wrapper.classList.remove("active");
     button9.classList.remove("upupup");
-    selectBtn.firstElementChild.setAttribute("ISOcode", Isocode);
+    selectBtn.firstElementChild.setAttribute("isocode", Isocode);
     selectBtn.firstElementChild.innerText = selectedLi.innerText;
   }
 
-  // Make updateName available globally for onclick handlers
-  window.updateSourceName = updateName;
+  options.addEventListener("click", (e) => {
+    const li = e.target.closest("li");
+    if (li) updateName(li);
+  });
 
   searchInp.addEventListener("keyup", () => {
     let arr = [];
@@ -197,7 +199,7 @@ export function initializeSourceCurrencyDropdown() {
       })
       .map(
         (currency) =>
-          `<li onclick="window.updateSourceName(this)" isocode="${currency[2]}">${currency[0]}<span class="fi fi-${currency[1]}"></span></li>`,
+          `<li isocode="${currency[2]}">${currency[0]}<span class="fi fi-${currency[1]}"></span></li>`,
       )
       .join("");
 
@@ -224,24 +226,26 @@ export function initializeTargetCurrencyDropdown() {
 
     currencies.forEach((country) => {
       let isSelected = country == selectedCountry ? "selected" : "";
-      let li = `<li onclick="window.updateTargetName(this)" isocode=${country[2]} class="${isSelected}">${country[0]}<span class="fi fi-${country[1]}"></span></li>`;
+      let li = `<li isocode="${country[2]}" class="${isSelected}">${country[0]}<span class="fi fi-${country[1]}"></span></li>`;
       optionsTarget.insertAdjacentHTML("beforeend", li);
     });
   }
 
   function updateName2(selectedLi) {
     searchInpTarget.value = "";
-    let Isocode = selectedLi.attributes.isocode.value;
+    let Isocode = selectedLi.getAttribute("isocode");
 
     addCountry2(selectedLi.innerText);
     wrapperTarget.classList.remove("active");
     buttonTarget.classList.remove("hide");
-    selectBtnTarget.firstElementChild.setAttribute("ISOcode", Isocode);
+    selectBtnTarget.firstElementChild.setAttribute("isocode", Isocode);
     selectBtnTarget.firstElementChild.innerText = selectedLi.innerText;
   }
 
-  // Make updateName2 available globally for onclick handlers
-  window.updateTargetName = updateName2;
+  optionsTarget.addEventListener("click", (e) => {
+    const li = e.target.closest("li");
+    if (li) updateName2(li);
+  });
 
   searchInpTarget.addEventListener("keyup", () => {
     let arr = [];
@@ -253,7 +257,7 @@ export function initializeTargetCurrencyDropdown() {
       })
       .map(
         (currency) =>
-          `<li onclick="window.updateTargetName(this)" isocode="${currency[2]}">${currency[0]}<span class="fi fi-${currency[1]}"></span></li>`,
+          `<li isocode="${currency[2]}">${currency[0]}<span class="fi fi-${currency[1]}"></span></li>`,
       )
       .join("");
 
