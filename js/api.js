@@ -159,7 +159,12 @@ export async function fetchExchangeRates(
 
 // Local logo overrides – used when the API returns a broken/relative logo URL
 const LOCAL_LOGO_OVERRIDES = {
-  23: "img/moneygram_logo.png", // MoneyGram
+  6:   "img/paypal.jpg",
+  22:  "img/westerunion.png",
+  23:  "img/moneygram_logo.png",
+  39:  "img/wise_logo.png",
+  44:  "img/revolut-logo.png",
+  121: "img/Paysera_logo.png",
 };
 
 // Display results in table

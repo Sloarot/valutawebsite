@@ -547,13 +547,18 @@ li .selected {
 #resultsTable td {
   background-color: rgb(255, 255, 255);
   text-align: center;
+  vertical-align: middle;
+  padding: 8px 10px;
   margin: auto;
   border-bottom: 1px solid rgb(224, 224, 224);
 }
 
 #resultsTable td img {
-  max-width: 180px;
-  padding: 15px;
+  max-height: 50px;
+  max-width: 150px;
+  width: auto;
+  height: auto;
+  display: block;
   margin: auto;
 }
 
@@ -883,13 +888,14 @@ li .selected {
 
 .info-icon {
   color: #555;
-  font-size: clamp(1rem, 2.3vw, 1.9rem);
+  font-size: 0.85rem;
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s;
   display: inline-block;
   position: absolute;
-  left: 89%;
+  top: 4px;
+  right: 4px;
   z-index: 1;
   white-space: nowrap;
 }
@@ -929,9 +935,6 @@ li .selected {
 
 /* Screens larger than 1300px */
 @media screen and (min-width: 1301px) {
-  .info-icon {
-    left: 80%;
-  }
 }
 
 /* Screens up to 1300px */
