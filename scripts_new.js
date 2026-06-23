@@ -32,28 +32,21 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Setup modal click handlers
   setupModalClickHandler();
 
-  // Make Revolut info functions available globally (used by api.js)
+  // Make Revolut info functions available globally
   window.showRevolutInfo = showRevolutInfo;
   window.closeRevolutInfo = closeRevolutInfo;
 
-  // Language switcher button
-  document.getElementById("langSelected").addEventListener("click", () => {
+  // Expose language switcher globally for the lang-btn onclick handlers
+  window.switchLanguage = async (lang) => {
+    await setLanguage(lang);
+  };
+
+  // Toggle the language dropdown open/closed
+  window.toggleLangDropdown = () => {
     document.getElementById("langDropdown").classList.toggle("open");
-  });
+  };
 
-  // Language menu items (event delegation via data-lang attribute)
-  document.getElementById("langMenu").addEventListener("click", async (e) => {
-    const li = e.target.closest("[data-lang]");
-    if (li) await setLanguage(li.getAttribute("data-lang"));
-  });
-
-  // Compare button
-  document.querySelector(".button-9").addEventListener("click", fetchWise);
-
-  // Tooltip close button
-  document.querySelector(".tooltip-close").addEventListener("click", closeRevolutInfo);
-
-  // Close language dropdown when clicking outside
+  // Close dropdown when clicking outside
   document.addEventListener("click", (e) => {
     const dropdown = document.getElementById("langDropdown");
     if (dropdown && !dropdown.contains(e.target)) {

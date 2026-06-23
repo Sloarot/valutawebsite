@@ -16,7 +16,7 @@
 
     <!-- Language Switcher -->
     <div class="lang-dropdown" id="langDropdown">
-        <button class="lang-selected" id="langSelected">
+        <button class="lang-selected" id="langSelected" onclick="window.toggleLangDropdown()">
             <span class="fi fi-gb" id="langFlag"></span>
             <span id="langLabel">EN</span>
             <svg class="lang-chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,19 +25,19 @@
             </svg>
         </button>
         <ul class="lang-menu" id="langMenu">
-            <li data-lang="en"><span class="fi fi-gb"></span> EN</li>
-            <li data-lang="fr"><span class="fi fi-fr"></span> FR</li>
-            <li data-lang="nl"><span class="fi fi-nl"></span> NL</li>
-            <li data-lang="pl"><span class="fi fi-pl"></span> PL</li>
-            <li data-lang="bg"><span class="fi fi-bg"></span> BG</li>
-            <li data-lang="ro"><span class="fi fi-ro"></span> RO</li>
-            <li data-lang="es"><span class="fi fi-es"></span> ES</li>
-            <li data-lang="pt"><span class="fi fi-pt"></span> PT</li>
-            <li data-lang="it"><span class="fi fi-it"></span> IT</li>
-            <li data-lang="cs"><span class="fi fi-cz"></span> CS</li>
-            <li data-lang="ru"><span class="fi fi-ru"></span> RU</li>
-            <li data-lang="hu"><span class="fi fi-hu"></span> HU</li>
-            <li data-lang="el"><span class="fi fi-gr"></span> EL</li>
+            <li onclick="window.switchLanguage('en')"><span class="fi fi-gb"></span> EN</li>
+            <li onclick="window.switchLanguage('fr')"><span class="fi fi-fr"></span> FR</li>
+            <li onclick="window.switchLanguage('nl')"><span class="fi fi-nl"></span> NL</li>
+            <li onclick="window.switchLanguage('pl')"><span class="fi fi-pl"></span> PL</li>
+            <li onclick="window.switchLanguage('bg')"><span class="fi fi-bg"></span> BG</li>
+            <li onclick="window.switchLanguage('ro')"><span class="fi fi-ro"></span> RO</li>
+            <li onclick="window.switchLanguage('es')"><span class="fi fi-es"></span> ES</li>
+            <li onclick="window.switchLanguage('pt')"><span class="fi fi-pt"></span> PT</li>
+            <li onclick="window.switchLanguage('it')"><span class="fi fi-it"></span> IT</li>
+            <li onclick="window.switchLanguage('cs')"><span class="fi fi-cz"></span> CS</li>
+            <li onclick="window.switchLanguage('ru')"><span class="fi fi-ru"></span> RU</li>
+            <li onclick="window.switchLanguage('hu')"><span class="fi fi-hu"></span> HU</li>
+            <li onclick="window.switchLanguage('el')"><span class="fi fi-gr"></span> EL</li>
         </ul>
     </div>
 
@@ -105,7 +105,7 @@
             <div id="noticeCurrency" class="notice" data-i18n="notice_currency">Currencies not correct, please check
                 again!</div>
 
-            <div class="buttonContainer"> <input type="button" class="button-9"
+            <div class="buttonContainer"> <input type="button" onclick="fetchWise()" class="button-9"
                     value="Compare rates" data-i18n-value="compare_btn">
             </div>
 
@@ -153,7 +153,7 @@
     <!-- Revolut Info Tooltip Modal -->
     <div id="revolutTooltip" class="tooltip-modal">
         <div class="tooltip-content">
-            <span class="tooltip-close">&times;</span>
+            <span class="tooltip-close" onclick="closeRevolutInfo()">&times;</span>
             <h3 data-i18n="revolut_title">💡 Revolut has a special rate structure</h3>
             <p><strong data-i18n="revolut_estimate">The displayed rate is an ESTIMATE based on:</strong></p>
             <ul>
