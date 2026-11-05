@@ -21,6 +21,12 @@
 
     # Block cross-site scripting in older browsers
     Header always set X-XSS-Protection "1; mode=block"
+
+    # Always revalidate HTML/CSS/JS/locale files so deploys show up immediately
+    # (unchanged files still come from cache via a cheap 304 Not Modified)
+    <FilesMatch "\.(html|css|js|json)$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
 </IfModule>
 
 # -----------------------------------------------------------------------
