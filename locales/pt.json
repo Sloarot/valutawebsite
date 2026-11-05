@@ -58,5 +58,14 @@
   "same_currency": "A moeda de origem e a de destino não podem ser iguais!",
   "currency_not_found": "Oops, moeda não encontrada",
   "last_updated": "Última atualização:",
-  "estimated_disclaimer": "* Estimado – visite o site do fornecedor para a taxa exata"
+  "estimated_disclaimer": "* Estimado – visite o site do fornecedor para a taxa exata",
+  "amount_too_large": "O valor excede o máximo de 1.000.000.",
+  "source_live": "Taxas em tempo real",
+  "source_cache": "Taxas em cache",
+  "swap_currencies": "Trocar moedas",
+  "estimated": "Estimativa",
+  "vs_best": "vs o melhor",
+  "providers": "Fornecedores",
+  "close": "Fechar",
+  "empty_state": "Introduza um valor e escolha duas moedas para ver todos os fornecedores ordenados pelo que recebe."
 }

@@ -58,5 +58,14 @@
   "same_currency": "Source and target currencies cannot be the same!",
   "currency_not_found": "Oops, currency not found",
   "last_updated": "Last updated:",
-  "estimated_disclaimer": "* Estimated – visit provider website for exact rate"
+  "estimated_disclaimer": "* Estimated – visit provider website for exact rate",
+  "amount_too_large": "Amount exceeds the maximum of 1,000,000.",
+  "source_live": "Live rates",
+  "source_cache": "Cached rates",
+  "swap_currencies": "Swap currencies",
+  "estimated": "Estimate",
+  "vs_best": "vs best",
+  "providers": "Providers",
+  "close": "Close",
+  "empty_state": "Enter an amount and choose two currencies to see every provider ranked by what you receive."
 }

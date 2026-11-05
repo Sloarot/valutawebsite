@@ -58,5 +58,14 @@
   "same_currency": "¡La divisa de origen y la de destino no pueden ser la misma!",
   "currency_not_found": "Vaya, divisa no encontrada",
   "last_updated": "Última actualización:",
-  "estimated_disclaimer": "* Estimado – visita el sitio del proveedor para el tipo exacto"
+  "estimated_disclaimer": "* Estimado – visita el sitio del proveedor para el tipo exacto",
+  "amount_too_large": "El importe supera el máximo de 1.000.000.",
+  "source_live": "Tipos en vivo",
+  "source_cache": "Tipos en caché",
+  "swap_currencies": "Intercambiar divisas",
+  "estimated": "Estimación",
+  "vs_best": "vs el mejor",
+  "providers": "Proveedores",
+  "close": "Cerrar",
+  "empty_state": "Introduce un importe y elige dos divisas para ver todos los proveedores ordenados por lo que recibes."
 }

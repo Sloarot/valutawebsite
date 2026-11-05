@@ -58,5 +58,14 @@
   "same_currency": "Zdrojová a cílová měna nemohou být stejné!",
   "currency_not_found": "Jejda, měna nenalezena",
   "last_updated": "Poslední aktualizace:",
-  "estimated_disclaimer": "* Odhad – navštivte web poskytovatele pro přesný kurz"
+  "estimated_disclaimer": "* Odhad – navštivte web poskytovatele pro přesný kurz",
+  "amount_too_large": "Částka přesahuje maximum 1 000 000.",
+  "source_live": "Aktuální kurzy",
+  "source_cache": "Kurzy z mezipaměti",
+  "swap_currencies": "Prohodit měny",
+  "estimated": "Odhad",
+  "vs_best": "oproti nejlepšímu",
+  "providers": "Poskytovatelé",
+  "close": "Zavřít",
+  "empty_state": "Zadejte částku a vyberte dvě měny a uvidíte poskytovatele seřazené podle toho, kolik obdržíte."
 }

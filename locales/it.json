@@ -58,5 +58,14 @@
   "same_currency": "La valuta di partenza e quella di destinazione non possono essere uguali!",
   "currency_not_found": "Ops, valuta non trovata",
   "last_updated": "Ultimo aggiornamento:",
-  "estimated_disclaimer": "* Stimato – visita il sito del fornitore per il tasso esatto"
+  "estimated_disclaimer": "* Stimato – visita il sito del fornitore per il tasso esatto",
+  "amount_too_large": "L'importo supera il massimo di 1.000.000.",
+  "source_live": "Tassi in tempo reale",
+  "source_cache": "Tassi in cache",
+  "swap_currencies": "Inverti valute",
+  "estimated": "Stima",
+  "vs_best": "vs il migliore",
+  "providers": "Fornitori",
+  "close": "Chiudi",
+  "empty_state": "Inserisci un importo e scegli due valute per vedere tutti i fornitori ordinati in base a quanto ricevi."
 }

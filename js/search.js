@@ -1,5 +1,5 @@
-// Currency search and dropdown functionality
-import { t } from "./i18n.js";
+// Currency list and searchable currency picker
+import { tx, onLanguageChange } from "./i18n.js";
 
 export const currencies = [
   ["EUR - Euro", "eu", "EUR"],
@@ -156,118 +156,118 @@ export const currencies = [
   ["ZMW - Zambian Kwacha", "zm", "ZMW"],
 ];
 
-export function initializeSourceCurrencyDropdown() {
-  const wrapper = document.querySelector(".wrapper");
-  const selectBtn = wrapper.querySelector(".select-btn");
-  const searchInp = wrapper.querySelector("input");
-  const options = wrapper.querySelector(".options");
-  const button9 = document.querySelector(".button-9");
+const byCode = Object.fromEntries(currencies.map(([label, flag, code]) => [code, { label, flag, code, name: label.split(" - ").slice(1).join(" - ") }]));
+export const getCurrency = (code) => byCode[code];
 
-  function addCountry(selectedCountry) {
-    options.innerHTML = "";
+const openPickers = new Set();
 
-    currencies.forEach((country) => {
-      let isSelected = country == selectedCountry ? "selected" : "";
-      let li = `<li isocode="${country[2]}" class="${isSelected}">${country[0]}<span class="fi fi-${country[1]}"></span></li>`;
-      options.insertAdjacentHTML("beforeend", li);
-    });
+/**
+ * Turns an empty host element into a searchable currency picker.
+ * createCurrencyPicker(host, { id, value, labelKey, onChange }) -> { value, set(code), close() }
+ */
+export function createCurrencyPicker(host, { id, value = null, labelKey, onChange } = {}) {
+  host.classList.add("fxp");
+  host.innerHTML = `
+    <button type="button" class="fxp-btn" id="${id}" aria-haspopup="listbox" aria-expanded="false">
+      <span class="fxp-flag fi fis"></span>
+      <span class="fxp-text"><span class="fxp-code"></span><span class="fxp-name"></span></span>
+      <svg class="fxp-caret" viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="fxp-pop" hidden>
+      <div class="fxp-searchwrap">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <input class="fxp-search" id="${id}-search" type="text" autocomplete="off" spellcheck="false">
+      </div>
+      <ul class="fxp-list" role="listbox"></ul>
+    </div>`;
+
+  const btn = host.querySelector(".fxp-btn");
+  const flagEl = host.querySelector(".fxp-flag");
+  const pop = host.querySelector(".fxp-pop");
+  const input = host.querySelector(".fxp-search");
+  const list = host.querySelector(".fxp-list");
+  let items = [];
+  let active = 0;
+
+  function paintButton() {
+    const c = byCode[value];
+    flagEl.className = `fxp-flag fi fis${c ? " fi-" + c.flag : " is-empty"}`;
+    host.querySelector(".fxp-code").textContent = c ? c.code : "";
+    host.querySelector(".fxp-name").textContent = c ? c.name : tx(labelKey);
+    btn.setAttribute("aria-label", tx(labelKey) + (c ? ": " + c.label : ""));
   }
 
-  function updateName(selectedLi) {
-    searchInp.value = "";
-    let Isocode = selectedLi.getAttribute("isocode");
-
-    addCountry(selectedLi.innerText);
-    wrapper.classList.remove("active");
-    button9.classList.remove("upupup");
-    selectBtn.firstElementChild.setAttribute("isocode", Isocode);
-    selectBtn.firstElementChild.innerText = selectedLi.innerText;
-  }
-
-  options.addEventListener("click", (e) => {
-    const li = e.target.closest("li");
-    if (li) updateName(li);
-  });
-
-  searchInp.addEventListener("keyup", () => {
-    let arr = [];
-    let searchedVal = searchInp.value.toLowerCase();
-
-    arr = currencies
-      .filter((currency) => {
-        return currency[0].toLowerCase().startsWith(searchedVal);
-      })
-      .map(
-        (currency) =>
-          `<li isocode="${currency[2]}">${currency[0]}<span class="fi fi-${currency[1]}"></span></li>`,
-      )
+  function renderList() {
+    const q = input.value.trim().toLowerCase();
+    items = Object.values(byCode).filter((c) => !q || c.code.toLowerCase().startsWith(q) || c.name.toLowerCase().includes(q));
+    if (!items.length) {
+      list.innerHTML = `<li class="fxp-empty">${tx("currency_not_found")}</li>`;
+      return;
+    }
+    active = Math.max(0, Math.min(active, items.length - 1));
+    list.innerHTML = items
+      .map((c, i) => `<li class="fxp-item${i === active ? " is-active" : ""}" role="option" aria-selected="${c.code === value}" data-code="${c.code}"><span class="fi fis fi-${c.flag}"></span><b>${c.code}</b><span class="fxp-item-name">${c.name}</span></li>`)
       .join("");
-
-    options.innerHTML = arr ? arr : `<p>${t("currency_not_found")}</p>`;
-  });
-
-  selectBtn.addEventListener("click", () => {
-    wrapper.classList.toggle("active");
-    button9.classList.toggle("upupup");
-  });
-
-  addCountry();
-}
-
-export function initializeTargetCurrencyDropdown() {
-  const wrapperTarget = document.querySelector(".wrapperTarget");
-  const selectBtnTarget = wrapperTarget.querySelector(".select-btnTarget");
-  const searchInpTarget = wrapperTarget.querySelector("input");
-  const optionsTarget = wrapperTarget.querySelector(".optionsTarget");
-  const buttonTarget = document.querySelector(".button-9");
-
-  function addCountry2(selectedCountry) {
-    optionsTarget.innerHTML = "";
-
-    currencies.forEach((country) => {
-      let isSelected = country == selectedCountry ? "selected" : "";
-      let li = `<li isocode="${country[2]}" class="${isSelected}">${country[0]}<span class="fi fi-${country[1]}"></span></li>`;
-      optionsTarget.insertAdjacentHTML("beforeend", li);
-    });
   }
 
-  function updateName2(selectedLi) {
-    searchInpTarget.value = "";
-    let Isocode = selectedLi.getAttribute("isocode");
+  const scrollActive = () => list.querySelector(".is-active")?.scrollIntoView({ block: "nearest" });
 
-    addCountry2(selectedLi.innerText);
-    wrapperTarget.classList.remove("active");
-    buttonTarget.classList.remove("hide");
-    selectBtnTarget.firstElementChild.setAttribute("isocode", Isocode);
-    selectBtnTarget.firstElementChild.innerText = selectedLi.innerText;
+  function open() {
+    openPickers.forEach((p) => p !== api && p.close());
+    pop.hidden = false;
+    host.classList.add("is-open");
+    btn.setAttribute("aria-expanded", "true");
+    input.placeholder = tx("search_placeholder");
+    input.value = "";
+    active = Math.max(0, Object.keys(byCode).indexOf(value));
+    renderList();
+    openPickers.add(api);
+    setTimeout(() => {
+      input.focus();
+      scrollActive();
+    }, 0);
   }
 
-  optionsTarget.addEventListener("click", (e) => {
-    const li = e.target.closest("li");
-    if (li) updateName2(li);
+  function close() {
+    pop.hidden = true;
+    host.classList.remove("is-open");
+    btn.setAttribute("aria-expanded", "false");
+    openPickers.delete(api);
+  }
+
+  function choose(code) {
+    value = code;
+    paintButton();
+    close();
+    btn.focus();
+    onChange?.(code);
+  }
+
+  btn.addEventListener("click", () => (pop.hidden ? open() : close()));
+  input.addEventListener("input", () => {
+    active = 0;
+    renderList();
+  });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") { active = Math.min(active + 1, items.length - 1); renderList(); scrollActive(); e.preventDefault(); }
+    else if (e.key === "ArrowUp") { active = Math.max(active - 1, 0); renderList(); scrollActive(); e.preventDefault(); }
+    else if (e.key === "Enter") { if (items[active]) choose(items[active].code); e.preventDefault(); }
+    else if (e.key === "Escape") { close(); btn.focus(); }
+  });
+  list.addEventListener("click", (e) => {
+    const li = e.target.closest("[data-code]");
+    if (li) choose(li.dataset.code);
+  });
+  document.addEventListener("click", (e) => {
+    if (!host.contains(e.target)) close();
   });
 
-  searchInpTarget.addEventListener("keyup", () => {
-    let arr = [];
-    let searchedVal = searchInpTarget.value.toLowerCase();
-
-    arr = currencies
-      .filter((currency) => {
-        return currency[0].toLowerCase().startsWith(searchedVal);
-      })
-      .map(
-        (currency) =>
-          `<li isocode="${currency[2]}">${currency[0]}<span class="fi fi-${currency[1]}"></span></li>`,
-      )
-      .join("");
-
-    optionsTarget.innerHTML = arr ? arr : `<p>${t("currency_not_found")}</p>`;
-  });
-
-  selectBtnTarget.addEventListener("click", () => {
-    wrapperTarget.classList.toggle("active");
-    buttonTarget.classList.toggle("hide");
-  });
-
-  addCountry2();
+  const api = {
+    get value() { return value; },
+    set(code) { value = code; paintButton(); },
+    close,
+  };
+  onLanguageChange(paintButton);
+  paintButton();
+  return api;
 }

@@ -58,5 +58,14 @@
   "same_currency": "Valuta sursă și cea țintă nu pot fi aceleași!",
   "currency_not_found": "Ups, valuta nu a fost găsită",
   "last_updated": "Ultima actualizare:",
-  "estimated_disclaimer": "* Estimat – vizitează site-ul furnizorului pentru cursul exact"
+  "estimated_disclaimer": "* Estimat – vizitează site-ul furnizorului pentru cursul exact",
+  "amount_too_large": "Suma depășește maximul de 1.000.000.",
+  "source_live": "Cursuri live",
+  "source_cache": "Cursuri din cache",
+  "swap_currencies": "Inversează valutele",
+  "estimated": "Estimare",
+  "vs_best": "vs cel mai bun",
+  "providers": "Furnizori",
+  "close": "Închide",
+  "empty_state": "Introdu o sumă și alege două valute pentru a vedea toți furnizorii clasați după suma primită."
 }

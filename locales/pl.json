@@ -58,5 +58,14 @@
   "same_currency": "Waluta źródłowa i docelowa nie mogą być takie same!",
   "currency_not_found": "Ups, nie znaleziono waluty",
   "last_updated": "Ostatnia aktualizacja:",
-  "estimated_disclaimer": "* Szacunek – odwiedź stronę dostawcy, aby uzyskać dokładny kurs"
+  "estimated_disclaimer": "* Szacunek – odwiedź stronę dostawcy, aby uzyskać dokładny kurs",
+  "amount_too_large": "Kwota przekracza maksimum 1 000 000.",
+  "source_live": "Kursy na żywo",
+  "source_cache": "Kursy z pamięci podręcznej",
+  "swap_currencies": "Zamień waluty",
+  "estimated": "Szacunek",
+  "vs_best": "vs najlepsza",
+  "providers": "Dostawcy",
+  "close": "Zamknij",
+  "empty_state": "Wpisz kwotę i wybierz dwie waluty, aby zobaczyć ranking dostawców według otrzymanej kwoty."
 }

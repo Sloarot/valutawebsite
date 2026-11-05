@@ -3,177 +3,93 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Currency exchange from alternative providers</title>
-    <meta name="language" content="en">
+    <meta name="description" content="Compare exchange rates and fees from Wise, Revolut, PayPal, Western Union and more. See exactly how much your recipient gets.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@4.0.8/css/line.min.css">
 </head>
 
 <body>
+    <div class="wrap">
+        <header class="top">
+            <div class="brand">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="5" width="16" height="16" rx="5" fill="currentColor"/><rect x="9" y="5" width="16" height="16" rx="5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                FX Checker
+            </div>
+            <div id="lang"></div>
+        </header>
 
-    <!-- Language Switcher -->
-    <div class="lang-dropdown" id="langDropdown">
-        <button class="lang-selected" id="langSelected">
-            <span class="fi fi-gb" id="langFlag"></span>
-            <span id="langLabel">EN</span>
-            <svg class="lang-chevron" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </button>
-        <ul class="lang-menu" id="langMenu">
-            <li data-lang="en"><span class="fi fi-gb"></span> EN</li>
-            <li data-lang="fr"><span class="fi fi-fr"></span> FR</li>
-            <li data-lang="nl"><span class="fi fi-nl"></span> NL</li>
-            <li data-lang="pl"><span class="fi fi-pl"></span> PL</li>
-            <li data-lang="bg"><span class="fi fi-bg"></span> BG</li>
-            <li data-lang="ro"><span class="fi fi-ro"></span> RO</li>
-            <li data-lang="es"><span class="fi fi-es"></span> ES</li>
-            <li data-lang="pt"><span class="fi fi-pt"></span> PT</li>
-            <li data-lang="it"><span class="fi fi-it"></span> IT</li>
-            <li data-lang="cs"><span class="fi fi-cz"></span> CS</li>
-            <li data-lang="ru"><span class="fi fi-ru"></span> RU</li>
-            <li data-lang="hu"><span class="fi fi-hu"></span> HU</li>
-            <li data-lang="el"><span class="fi fi-gr"></span> EL</li>
-        </ul>
-    </div>
+        <div class="shell">
+            <!-- Transfer slip (input form) -->
+            <aside class="slip">
+                <h1><span id="heroDitch">Ditch</span> <mark id="heroBanks">the banks</mark></h1>
+                <p id="heroSub">Compare the best exchange rates in Europe</p>
 
-    <!-- Sliding Banner -->
-    <div id="slidingBanner" class="sliding-banner">
-        <div class="banner-header"><span class="ditch-span" data-i18n="ditch_word">Ditch</span> <span
-                data-i18n="banner_header_rest">the banks !!! 💵 Compare the best exchange rates in Europe ...</span>
-        </div>
-        <div class="banner-content">
-            <span class="banner-icon">💵</span>
-            <span class="banner-text" data-i18n="banner_step1">Enter amount</span>
-            <span class="banner-separator">→</span>
-            <span class="banner-icon">🔄</span>
-            <span class="banner-text" data-i18n="banner_step2">Select currencies</span>
-            <span class="banner-separator">→</span>
-            <span class="banner-icon">✨</span>
-            <span class="banner-text" data-i18n="banner_step3">Compare best rates</span>
-        </div>
-    </div>
-    <div class="outercontainer">
-        <div class="herocontainer">
-            <div id="logox"></div>
-            <div></div>
-        </div>
-        <div class="innercontainer">
+                <label class="box" for="quantity">
+                    <span class="lab" data-i18n="amount_label">Amount:</span>
+                    <input id="quantity" class="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="amount" data-i18n-placeholder="amount_placeholder">
+                </label>
 
-            <div class="currencyContainer">
-                <div class="quantityfield">
-                    <label for="quantity" class="sourceC" data-i18n="amount_label">Amount:</label>
-                    <input type="text" name="quantity" id="quantity" autocomplete="Quantity" placeholder="amount"
-                        data-i18n-placeholder="amount_placeholder">
-                </div>
-                <div id="notice" class="notice" data-i18n="notice_amount">Please enter an amount!</div>
-
-                <div class="wrapper">
-                    <div class="select-btn">
-                        <span>Base Currency</span><!-- text set by i18n/JS -->
-                        <i class="uil uil-angle-down"></i>
+                <div class="pair">
+                    <div class="box">
+                        <span class="lab" data-i18n="base_currency">Base Currency</span>
+                        <div id="sourcePicker"></div>
                     </div>
-                    <div class="content">
-                        <div class="search">
-                            <i class="uil uil-search"></i>
-                            <input type="text" placeholder="Search" data-i18n-placeholder="search_placeholder">
-                        </div>
-                        <ul class="options">
-                        </ul>
+                    <div class="box">
+                        <span class="lab" data-i18n="target_currency">Target Currency</span>
+                        <div id="targetPicker"></div>
                     </div>
+                    <button type="button" id="swapBtn" class="swap" data-i18n-label="swap_currencies" aria-label="Swap currencies">
+                        <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3v13l-3.5-3.5M13 17V4l3.5 3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
                 </div>
 
-                <div class="wrapperTarget">
-                    <div class="select-btnTarget">
-                        <span>Target Currency</span><!-- text set by i18n/JS -->
-                        <i class="uil uil-angle-down"></i>
-                    </div>
-                    <div class="content">
-                        <div class="search">
-                            <i class="uil uil-search"></i>
-                            <input type="text" placeholder="Search" data-i18n-placeholder="search_placeholder">
-                        </div>
-                        <ul class="optionsTarget">
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="noticeCurrency" class="notice" data-i18n="notice_currency">Currencies not correct, please check
-                again!</div>
+                <p id="notice" class="notice" role="alert" hidden></p>
 
-            <div class="buttonContainer"> <input type="button" class="button-9"
-                    value="Compare rates" data-i18n-value="compare_btn">
-            </div>
+                <button type="button" id="compareBtn" class="go" data-i18n="compare_btn">Compare rates</button>
 
-            <table id="resultsTable">
-                <thead>
+                <ol class="steps">
+                    <li data-i18n="banner_step1">Enter amount</li>
+                    <li data-i18n="banner_step2">Select currencies</li>
+                    <li data-i18n="banner_step3">Compare best rates</li>
+                </ol>
+            </aside>
 
-                </thead>
-                <tbody id="searchResults">
-
-                </tbody>
-            </table>
-
-            <!-- How we rank explanation -->
-            <div class="ranking-explanation">
-                <h3 data-i18n="how_we_rank_title">💡 How We Rank</h3>
-                <p><span data-i18n="how_we_rank_p1">Results are sorted by </span><strong
-                        data-i18n="how_we_rank_bold1">"You Get"</strong><span data-i18n="how_we_rank_p2"> — the actual
-                        amount the recipient receives. The top result gives you the most money, even if fees or exchange
-                        rates seem different. The </span><strong data-i18n="how_we_rank_bold2">Effective
-                        Rate</strong><span data-i18n="how_we_rank_p3"> shows the true cost per unit after all
-                        fees.</span></p>
-            </div>
-
-            <div class="logobanner">
-                <div class="logoprovider"><img src="img/wise_logo.png" alt=""></div>
-                <div class="logoprovider"><img src="img/paypal.jpg" alt=""></div>
-                <div class="logoprovider"><img src="img/revolut-logo.png" alt=""></div>
-                <div class="logoprovider"><img src="img/Paysera_logo.png" alt=""></div>
-                <div class="logoprovider"><img src="img/westerunion.png" alt=""></div>
-                <div class="logoprovider"><img src="img/Payoneer_logo.svg.png" alt=""></div>
-            </div>
-
-            <!-- Affiliate Disclosure -->
-            <div class="affiliate-disclosure">
-                <p><strong data-i18n="affiliate_label">📌 Affiliate Disclosure:</strong> <span
-                        data-i18n="affiliate_text">We may earn a commission if you use our links to make a transfer.
-                        This helps us keep the service free. Our comparisons remain unbiased and we always show the best
-                        rates available.</span></p>
-            </div>
-
+            <!-- Results -->
+            <main class="results" id="results" aria-live="polite"></main>
         </div>
 
+        <section class="lower">
+            <div class="panel">
+                <h2 data-i18n="how_we_rank_title">How We Rank</h2>
+                <p><span data-i18n="how_we_rank_p1">Results are sorted by </span><strong data-i18n="how_we_rank_bold1">"You Get"</strong><span data-i18n="how_we_rank_p2"> — the actual amount the recipient receives. The top result gives you the most money, even if fees or exchange rates seem different. The </span><strong data-i18n="how_we_rank_bold2">Effective Rate</strong><span data-i18n="how_we_rank_p3"> shows the true cost per unit after all fees.</span></p>
+            </div>
+            <div class="panel">
+                <h2 data-i18n="providers">Providers</h2>
+                <div class="strip">
+                    <div><img src="img/wise_logo.png" alt="Wise"></div>
+                    <div><img src="img/paypal.jpg" alt="PayPal"></div>
+                    <div><img src="img/revolut-logo.png" alt="Revolut"></div>
+                    <div><img src="img/Paysera_logo.png" alt="Paysera"></div>
+                    <div><img src="img/westerunion.png" alt="Western Union"></div>
+                    <div><img src="img/Payoneer_logo.svg.png" alt="Payoneer"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Affiliate Disclosure -->
+        <p class="disclosure"><strong data-i18n="affiliate_label">Affiliate Disclosure:</strong> <span data-i18n="affiliate_text">We may earn a commission if you use our links to make a transfer. This helps us keep the service free. Our comparisons remain unbiased and we always show the best rates available.</span></p>
     </div>
 
-    <!-- Revolut Info Tooltip Modal -->
-    <div id="revolutTooltip" class="tooltip-modal">
-        <div class="tooltip-content">
-            <span class="tooltip-close">&times;</span>
-            <h3 data-i18n="revolut_title">💡 Revolut has a special rate structure</h3>
-            <p><strong data-i18n="revolut_estimate">The displayed rate is an ESTIMATE based on:</strong></p>
-            <ul>
-                <li data-i18n="revolut_bullet1">✓ Weekday rate within free tier limits</li>
-                <li data-i18n="revolut_bullet2">✓ Standard account pricing</li>
-                <li data-i18n="revolut_bullet3">✓ Real-time mid-market rate</li>
-            </ul>
-            <p><strong data-i18n="revolut_varies">Actual rates may vary based on:</strong></p>
-            <ul>
-                <li>📅 <strong data-i18n="revolut_vary1_label">Day of week:</strong> <span
-                        data-i18n="revolut_vary1_text">1% markup applies on weekends (Sat-Sun)</span></li>
-                <li>👤 <strong data-i18n="revolut_vary2_label">Account tier:</strong> <span
-                        data-i18n="revolut_vary2_text">Standard/Premium/Metal get different rates</span></li>
-                <li>💰 <strong data-i18n="revolut_vary3_label">Transfer limits:</strong> <span
-                        data-i18n="revolut_vary3_text">£1,000/month free for Standard accounts</span></li>
-                <li>⏰ <strong data-i18n="revolut_vary4_label">Time of day:</strong> <span
-                        data-i18n="revolut_vary4_text">Rates update in real-time with market conditions</span></li>
-            </ul>
-            <p class="tooltip-note" data-i18n="revolut_note">For the exact rate, please visit Revolut's website
-                directly.</p>
+    <!-- Revolut Info Modal -->
+    <div id="revolutTooltip" class="overlay" hidden>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="revolutTitle">
+            <button type="button" class="close" data-rv-close data-i18n-label="close" aria-label="Close">×</button>
+            <div data-rv-body></div>
         </div>
     </div>
 

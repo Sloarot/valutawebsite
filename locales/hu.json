@@ -58,5 +58,14 @@
   "same_currency": "A forrás- és a célvaluta nem lehet azonos!",
   "currency_not_found": "Hoppá, a valuta nem található",
   "last_updated": "Utolsó frissítés:",
-  "estimated_disclaimer": "* Becsült – a pontos árfolyamért látogasd meg a szolgáltató weboldalát"
+  "estimated_disclaimer": "* Becsült – a pontos árfolyamért látogasd meg a szolgáltató weboldalát",
+  "amount_too_large": "Az összeg meghaladja az 1 000 000-es maximumot.",
+  "source_live": "Élő árfolyamok",
+  "source_cache": "Gyorsítótárazott árfolyamok",
+  "swap_currencies": "Pénznemek felcserélése",
+  "estimated": "Becslés",
+  "vs_best": "a legjobbhoz képest",
+  "providers": "Szolgáltatók",
+  "close": "Bezárás",
+  "empty_state": "Adjon meg egy összeget és válasszon két pénznemet, hogy lássa a szolgáltatókat a kapott összeg szerint rangsorolva."
 }

@@ -58,5 +58,14 @@
   "same_currency": "Bronvaluta en doelvaluta mogen niet hetzelfde zijn!",
   "currency_not_found": "Oeps, valuta niet gevonden",
   "last_updated": "Laatste update:",
-  "estimated_disclaimer": "* Schatting – bezoek de aanbieder voor de exacte koers"
+  "estimated_disclaimer": "* Schatting – bezoek de aanbieder voor de exacte koers",
+  "amount_too_large": "Bedrag overschrijdt het maximum van 1.000.000.",
+  "source_live": "Live koersen",
+  "source_cache": "Koersen uit cache",
+  "swap_currencies": "Valuta omwisselen",
+  "estimated": "Schatting",
+  "vs_best": "vs beste",
+  "providers": "Aanbieders",
+  "close": "Sluiten",
+  "empty_state": "Vul een bedrag in en kies twee valuta om alle aanbieders gerangschikt te zien op wat je ontvangt."
 }

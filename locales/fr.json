@@ -58,5 +58,14 @@
   "same_currency": "La devise source et la devise cible ne peuvent pas être identiques !",
   "currency_not_found": "Oups, devise introuvable",
   "last_updated": "Dernière mise à jour :",
-  "estimated_disclaimer": "* Estimation – visitez le site du prestataire pour le taux exact"
+  "estimated_disclaimer": "* Estimation – visitez le site du prestataire pour le taux exact",
+  "amount_too_large": "Le montant dépasse le maximum de 1 000 000.",
+  "source_live": "Taux en direct",
+  "source_cache": "Taux en cache",
+  "swap_currencies": "Inverser les devises",
+  "estimated": "Estimation",
+  "vs_best": "vs le meilleur",
+  "providers": "Prestataires",
+  "close": "Fermer",
+  "empty_state": "Saisissez un montant et choisissez deux devises pour voir chaque prestataire classé selon ce que vous recevez."
 }
