@@ -211,7 +211,8 @@ mark {
   cursor: pointer;
   text-align: left;
 }
-.fxp-flag { width: 28px; height: 28px; }
+/* .fxp prefix needed to beat flag-icons' own ".fi.fis { width: 1em }" */
+.fxp .fxp-flag.fi { width: 28px; height: 28px; }
 .fxp-flag.is-empty { background: var(--line); }
 .fxp-text { display: flex; align-items: baseline; gap: 8px; min-width: 0; flex: 1; }
 .fxp-code { font: 700 20px/1 var(--sans); }
