@@ -417,8 +417,30 @@ mark {
 .panel p { margin: 0; color: var(--muted); max-width: 62ch; }
 .panel strong { color: var(--ink); }
 .strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
-.strip div { height: 52px; border-radius: 12px; background: #ffffff; box-shadow: inset 0 0 0 1px var(--line); display: grid; place-items: center; padding: 8px; }
+.strip a {
+  height: 52px;
+  border-radius: 12px;
+  background: #ffffff; /* logos are designed for white */
+  box-shadow: inset 0 0 0 1px var(--line);
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.15s, translate 0.15s;
+}
+.strip a:hover { box-shadow: inset 0 0 0 2px var(--accent); translate: 0 -1px; }
 .strip img { max-height: 32px; object-fit: contain; }
+/* wise_logo.png is a square canvas with the wordmark in a thin middle band: crop to that band */
+.strip .strip-wise { position: relative; }
+.strip .strip-wise img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: min(100px, 100% - 16px);
+  height: auto;
+  max-height: none;
+}
 .disclosure { font-size: 12.5px; color: var(--muted); padding-block: 4px 40px; margin: 0; max-width: 90ch; }
 .disclosure strong { color: var(--ink); }
 
