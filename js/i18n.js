@@ -64,6 +64,8 @@ function applyTranslations() {
   document.documentElement.lang = currentLanguage;
 
   document.querySelectorAll("[data-i18n]").forEach((el) => (el.textContent = tx(el.dataset.i18n)));
+  // Sentence fragments keep their leading/trailing spaces (tx() would trim them)
+  document.querySelectorAll("[data-i18n-raw]").forEach((el) => (el.textContent = t(el.dataset.i18nRaw)));
   document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => (el.placeholder = tx(el.dataset.i18nPlaceholder)));
   document.querySelectorAll("[data-i18n-label]").forEach((el) => el.setAttribute("aria-label", tx(el.dataset.i18nLabel)));
 

@@ -13,6 +13,11 @@
   --on-accent: #ffffff;
   --marker: #ffe15a;      /* highlighter yellow */
   --marker-ink: #0e1430;
+  --mark-band: #ffe15a;   /* headline highlight behind --ink text */
+  --sum-bg: #0e1430;      /* summary card */
+  --sum-fg: #eef1f6;
+  --sum-muted: #a3abc4;
+  --sum-rule: #262e4d;
   --loss: #d93d42;
   --gain: #17915a;
   --shadow: rgb(14 20 48 / 0.35);
@@ -32,6 +37,11 @@
     --accent-soft: #1d2650;
     --on-accent: #0a0e1c;
     --marker: #e3c63c;
+    --mark-band: #6b5713;
+    --sum-bg: #1d2650;
+    --sum-fg: #e8ebf5;
+    --sum-muted: #a9b2d4;
+    --sum-rule: #2f3a6b;
     --loss: #ff6b6f;
     --gain: #4fd39a;
     --shadow: rgb(0 0 0 / 0.6);
@@ -64,7 +74,7 @@ button { font: inherit; color: inherit; }
 .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 
 mark {
-  background: linear-gradient(transparent 55%, var(--marker) 55% 92%, transparent 92%);
+  background: linear-gradient(transparent 55%, var(--mark-band) 55% 92%, transparent 92%);
   color: inherit;
   padding: 0 0.08em;
 }
@@ -299,8 +309,8 @@ mark {
 @keyframes spin { to { rotate: 360deg; } }
 
 .summary {
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--sum-bg);
+  color: var(--sum-fg);
   border-radius: 22px;
   padding: 22px 24px;
   display: grid;
@@ -308,7 +318,7 @@ mark {
   gap: 14px 24px;
   align-items: end;
 }
-.summary .lab { color: color-mix(in oklab, var(--bg) 65%, var(--ink)); }
+.summary .lab { color: var(--sum-muted); }
 .big { font-size: clamp(34px, 5vw, 52px); font-weight: 600; line-height: 1; letter-spacing: -0.03em; overflow-wrap: anywhere; }
 .big small { font-size: 0.42em; letter-spacing: 0; opacity: 0.7; }
 .sum-line { font-size: 15px; }
@@ -320,8 +330,8 @@ mark {
   flex-wrap: wrap;
   gap: 14px;
   font: 400 12px var(--mono);
-  color: color-mix(in oklab, var(--bg) 65%, var(--ink));
-  border-top: 1px solid color-mix(in oklab, var(--bg) 18%, var(--ink));
+  color: var(--sum-muted);
+  border-top: 1px solid var(--sum-rule);
   padding-top: 12px;
 }
 .live-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--gain); margin-right: 6px; vertical-align: 1px; }
